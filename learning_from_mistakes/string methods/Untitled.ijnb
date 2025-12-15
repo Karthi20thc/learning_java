@@ -1,0 +1,35 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "ea90068b-584b-4182-9ba1-6b30a20285ec",
+      "cell_type": "code",
+      "source": "// wrong\n\nString str = \"hello\";\nstr.toUpperCase();\n\nSystem.out.println(str);\n\n// correct\n\nString str = \"hello\";\nString strUP = str.toUpperCase();\n\nSystem.out.println(strUP);",
+      "metadata": {
+        "language": "java",
+        "id": "ea90068b-584b-4182-9ba1-6b30a20285ec",
+        "executionSummary": {
+          "executionOrder": 4,
+          "success": true
+        }
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": "hello\r\nHELLO\r\n"
+          },
+          "metadata": {},
+          "execution_count": 4
+        }
+      ]
+    }
+  ]
+}
