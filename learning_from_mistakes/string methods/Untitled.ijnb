@@ -12,10 +12,24 @@
       "cell_type": "code",
       "source": "// wrong\n\nString str = \"hello\";\nstr.toUpperCase();\n\nSystem.out.println(str);\n\n// correct\n\nString str = \"hello\";\nString strUP = str.toUpperCase();\n\nSystem.out.println(strUP);",
       "metadata": {
-        "language": "java"
+        "language": "java",
+        "id": "ea90068b-584b-4182-9ba1-6b30a20285ec",
+        "executionSummary": {
+          "executionOrder": 3,
+          "success": true
+        }
       },
-      "execution_count": null,
-      "outputs": []
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": "hello\r\nHELLO\r\n"
+          },
+          "metadata": {},
+          "execution_count": 3
+        }
+      ]
     }
   ]
 }
