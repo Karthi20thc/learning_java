@@ -8,12 +8,12 @@
   },
   "cells": [
     {
-      "id": "691994b0-dc06-4a1a-8172-484373aec8cd",
+      "id": "a3c53a3f-567d-405d-beca-cff146195a1d",
       "cell_type": "markdown",
       "source": "### split a given string with -",
       "metadata": {
         "language": "markdown",
-        "id": "691994b0-dc06-4a1a-8172-484373aec8cd"
+        "id": "a3c53a3f-567d-405d-beca-cff146195a1d"
       }
     },
     {
@@ -27,30 +27,17 @@
       "outputs": []
     },
     {
-      "id": "2b135f78-6676-4ecd-b9af-01d040f14b45",
+      "id": "7a888b0b-2f4e-4d35-bf2d-7e86b7be60cc",
       "cell_type": "code",
       "source": "// attempt 2\n\nString str = \"hello\";\n\nString[] splitstr =  str.split(\"\");\n\nString final_str = String.join(\"-\", splitstr);\n\nSystem.out.println(final_str);\n",
       "metadata": {
-        "language": "java",
-        "executionSummary": {
-          "executionOrder": 34,
-          "success": true
-        }
+        "language": "java"
       },
-      "execution_count": 34,
-      "outputs": [
-        {
-          "output_type": "execute_result",
-          "data": {
-            "text/plain": "h-e-l-l-o\r\n"
-          },
-          "metadata": {},
-          "execution_count": 34
-        }
-      ]
+      "execution_count": null,
+      "outputs": []
     },
     {
-      "id": "06e4f11f-20de-4aff-b212-d083380975eb",
+      "id": "ac1bbe2a-0554-4bff-944e-45df3d4c1d73",
       "cell_type": "code",
       "source": "// attempt 3 - using with var keyword\n\nString str = \"hello\";\n\nvar splitstr =  str.split(\"\");\n\nvar final_str = String.join(\"-\", splitstr);\n\nSystem.out.println(final_str);\n",
       "metadata": {
@@ -60,16 +47,16 @@
       "outputs": []
     },
     {
-      "id": "9d475dc2-bfcc-4979-bfe9-f1aa59efee9e",
+      "id": "782d3a71-733e-4047-91d2-df13147ef6eb",
       "cell_type": "markdown",
       "source": "## working solution",
       "metadata": {
         "language": "markdown",
-        "id": "9d475dc2-bfcc-4979-bfe9-f1aa59efee9e"
+        "id": "782d3a71-733e-4047-91d2-df13147ef6eb"
       }
     },
     {
-      "id": "889f0cfa-a8a9-44f8-9644-0eac922c6335",
+      "id": "2c9763e0-ba51-4dfa-8373-deb207ec4577",
       "cell_type": "code",
       "source": "String str = \"hello\";\n\nString result = String.join(\"-\", str.split(\"\"));\n\nSystem.out.println(result);\n",
       "metadata": {
@@ -79,7 +66,7 @@
       "outputs": []
     },
     {
-      "id": "0ae8cb4e-736d-4ccd-a70a-2e0cb17a4fe9",
+      "id": "44162184-1044-4e76-a3c0-5254eb7942fe",
       "cell_type": "code",
       "source": "// Functional way\n\npublic static String hyphenate(String str) {\n    return String.join(\"-\", str.split(\"\"));\n}\nString output = hyphenate(\"apple\");\nSystem.out.println(output);\n",
       "metadata": {
@@ -89,12 +76,12 @@
       "outputs": []
     },
     {
-      "id": "97003498-378f-4cc5-b18f-08cf2451b336",
+      "id": "f57a5cda-5994-40cb-a50c-1742c7a6e328",
       "cell_type": "markdown",
       "source": "Learned split and join methods",
       "metadata": {
         "language": "markdown",
-        "id": "97003498-378f-4cc5-b18f-08cf2451b336"
+        "id": "f57a5cda-5994-40cb-a50c-1742c7a6e328"
       }
     }
   ]
