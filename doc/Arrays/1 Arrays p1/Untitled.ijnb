@@ -1,0 +1,44 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "9ae60a8d-9f77-4cc1-9c9c-1ec1f166e959",
+      "cell_type": "markdown",
+      "source": "Great—this is a **very good beginner array example** 👍\nI’ll explain it **line by line**, *why it’s written that way*, and *what happens in memory*, so you really understand it.\n\n---\n\n## 1️⃣ Package declaration\n\n```java\npackage dev.lpa;\n```\n\n* Groups your class into a **namespace**\n* Helps avoid class name conflicts\n* Required when your folder structure is `dev/lpa/Main.java`\n\n---\n\n## 2️⃣ Class declaration\n\n```java\npublic class Main {\n```\n\n* Every Java program runs inside a **class**\n* `Main` is just a class name (conventionally used for entry point)\n\n---\n\n## 3️⃣ `main` method (program entry point)\n\n```java\npublic static void main(String[] args) {\n```\n\n* Java starts execution **from here**\n* `static` → JVM can call it without creating an object\n* `String[] args` → command-line arguments (unused here)\n\n---\n\n## 4️⃣ Creating an int array\n\n```java\nint[] myIntArray = new int[10];\n```\n\n### What this means\n\n* Creates an array that can store **10 integers**\n* Index range: `0` to `9`\n* **Default values**:\n\n  * `int` → `0`\n  * `double` → `0.0`\n  * `boolean` → `false`\n\n📦 Memory (conceptually):\n\n```\nIndex:  0  1  2  3  4  5  6  7  8  9\nValue:  0  0  0  0  0  0  0  0  0  0\n```\n\n---\n\n## 5️⃣ Assigning values by index\n\n```java\nmyIntArray[0] = 45;\nmyIntArray[1] = 1;\nmyIntArray[5] = 50;\n```\n\n* You are assigning values **only to specific positions**\n* Others remain `0`\n\n📦 Now memory looks like:\n\n```\nIndex:  0   1   2  3  4   5   6  7  8  9\nValue: 45   1   0  0  0  50   0  0  0  0\n```\n\n---\n\n## 6️⃣ Creating a double array\n\n```java\ndouble[] myDoubleArray = new double[10];\n```\n\n* Holds **10 double values**\n* Default value = `0.0`\n\n```java\nmyDoubleArray[2] = 3.5;\nSystem.out.println(myDoubleArray[2]);\n```\n\n✔ Output:\n\n```\n3.5\n```\n\n---\n\n## 7️⃣ Array initialization with values\n\n```java\nint[] firstTen = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};\n```\n\n* Shortcut way to create and fill an array\n* Java automatically sets size = **10**\n\n---\n\n## 8️⃣ Accessing array elements\n\n```java\nSystem.out.println(\"first = \" + firstTen[0]);\n```\n\n* Arrays are **zero-indexed**\n* `firstTen[0]` → `1`\n\n✔ Output:\n\n```\nfirst = 1\n```\n\n---\n\n## 9️⃣ Array length\n\n```java\nint arrayLength = firstTen.length;\n```\n\n* `length` is a **property**, not a method\n* No parentheses ❌ `length()`\n* Here: `arrayLength = 10`\n\n```java\nSystem.out.println(\"length of array = \" + arrayLength);\n```\n\n✔ Output:\n\n```\nlength of array = 10\n```\n\n---\n\n## 🔟 Accessing the last element (BEST PRACTICE)\n\n```java\nSystem.out.println(\"last = \" + firstTen[arrayLength - 1]);\n```\n\n* Last index = `length - 1`\n* Works even if array size changes\n\n✔ Output:\n\n```\nlast = 10\n```\n\n---\n\n## 1️⃣1️⃣ Declaring array first, assigning later\n\n```java\nint[] newArray;\nnewArray = new int[] {5, 4, 3, 2, 1};\n```\n\nWhy this is useful:\n\n* Sometimes you don’t know values immediately\n* Common in **methods**, **conditions**, **loops**\n\n⚠️ This syntax is REQUIRED when assigning later:\n\n```java\nnew int[] { ... }\n```\n\n---\n\n## 1️⃣2️⃣ Looping through an array\n\n```java\nfor (int i = 0; i < newArray.length; i++) {\n    System.out.print(newArray[i] + \" \");\n}\n```\n\n### What happens:\n\n* `i = 0` → prints `5`\n* `i = 1` → prints `4`\n* ...\n* Stops at `i == length`\n\n✔ Output:\n\n```\n5 4 3 2 1 \n```\n\n---\n\n## 🧠 Key concepts you learned here\n\n| Concept        | Explanation                |\n| -------------- | -------------------------- |\n| Array          | Fixed-size container       |\n| Index          | Starts from `0`            |\n| length         | Total number of elements   |\n| Default values | Auto-initialized           |\n| Looping        | Use `length` safely        |\n| Best practice  | `length - 1` for last item |\n\n---\n\n## 🔥 Next steps (recommended)\n\nIf you want, I can:\n\n1. Explain **for-each loop**\n2. Show **common array mistakes**\n3. Explain **array vs ArrayList**\n4. Give **practice problems** based on this code\n\nJust tell me 👍\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "9ae60a8d-9f77-4cc1-9c9c-1ec1f166e959"
+      }
+    },
+    {
+      "id": "2a42116e-825e-448a-87b7-0c8272caf380",
+      "cell_type": "code",
+      "source": "\n        int[] myIntArray = new int[10];\n        myIntArray[0] = 45;\n        myIntArray[1] = 1;\n        myIntArray[5] = 50;\n\n        double[] myDoubleArray = new double[10];\n        myDoubleArray[2] = 3.5;\n        System.out.println(myDoubleArray[2]);\n\n        int[] firstTen = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};\n        System.out.println(\"first = \" + firstTen[0]);\n        int arrayLength = firstTen.length;\n        System.out.println(\"length of array = \" + arrayLength);\n        System.out.println(\"last = \" + firstTen[arrayLength - 1]);\n\n        int[] newArray;\n        newArray = new int[] {5, 4, 3, 2, 1};\n        for (int i = 0; i < newArray.length; i++) {\n            System.out.print(newArray[i] + \" \");\n        }\n\n",
+      "metadata": {
+        "language": "java",
+        "id": "2a42116e-825e-448a-87b7-0c8272caf380",
+        "executionSummary": {
+          "executionOrder": 7,
+          "success": true
+        }
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": "3.5\r\nfirst = 1\r\nlength of array = 10\r\nlast = 10\r\n5 4 3 2 1 "
+          },
+          "metadata": {},
+          "execution_count": 7
+        }
+      ]
+    }
+  ]
+}

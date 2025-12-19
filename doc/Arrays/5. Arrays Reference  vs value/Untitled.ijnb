@@ -1,0 +1,30 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "34c256a8-ffd2-4483-a68a-a87e308dd6fc",
+      "cell_type": "markdown",
+      "source": "This is a **very important example** 👍\nIt teaches one of the **most confusing but critical Java concepts**:\n\n> **Arrays are reference types (objects), and Java passes references by value.**\n\nI’ll explain this **slowly, step-by-step**, with memory visuals so it really clicks.\n\n---\n\n## 1️⃣ Creating an array\n\n```java\nint[] myIntArray = new int[5];\n```\n\n* Creates an array of size 5\n* Default values = `0`\n\n📦 Memory:\n\n```\nmyIntArray → [0, 0, 0, 0, 0]\n```\n\n---\n\n## 2️⃣ Assigning array to another variable\n\n```java\nint[] anotherArray = myIntArray;\n```\n\n⚠️ **NO NEW ARRAY IS CREATED**\n\n* Both variables point to **the same array in memory**\n* Only the reference is copied\n\n📦 Memory:\n\n```\nmyIntArray ─┐\n            ├── [0, 0, 0, 0, 0]\nanotherArray┘\n```\n\n---\n\n## 3️⃣ Printing both arrays\n\n```java\nSystem.out.println(Arrays.toString(myIntArray));\nSystem.out.println(Arrays.toString(anotherArray));\n```\n\n✔ Output:\n\n```\n[0, 0, 0, 0, 0]\n[0, 0, 0, 0, 0]\n```\n\nSame output because it’s the **same array**.\n\n---\n\n## 4️⃣ Modifying through `anotherArray`\n\n```java\nanotherArray[0] = 1;\n```\n\nSince both variables refer to the same array:\n\n📦 Memory:\n\n```\n[1, 0, 0, 0, 0]\n```\n\n---\n\n## 5️⃣ Passing array to a method\n\n```java\nmodifyArray(myIntArray);\n```\n\n### VERY IMPORTANT RULE\n\nJava is **pass-by-value**\nBUT the value of an array variable is a **reference**\n\nSo:\n\n* A **copy of the reference** is passed\n* Both point to the same array\n\n---\n\n## 6️⃣ Inside `modifyArray`\n\n```java\nprivate static void modifyArray(int[] array) {\n    array[1] = 2;\n}\n```\n\n* `array` points to the same array\n* Modifying it affects the original\n\n📦 Memory now:\n\n```\n[1, 2, 0, 0, 0]\n```\n\n---\n\n## 7️⃣ Printing after changes\n\n```java\nSystem.out.println(\"after change myIntArray = \"\n        + Arrays.toString(myIntArray));\nSystem.out.println(\"after change anotherArray = \"\n        + Arrays.toString(anotherArray));\n```\n\n✔ Output:\n\n```\nafter change myIntArray = [1, 2, 0, 0, 0]\nafter change anotherArray = [1, 2, 0, 0, 0]\n```\n\n---\n\n# 🧠 THE CORE LESSON (This is gold)\n\n### ❌ What beginners THINK\n\n> Java copies arrays when assigning or passing to methods\n\n### ✅ What actually happens\n\n* Java copies the **reference**\n* All variables point to the **same object**\n\n---\n\n## 🔥 Extremely important distinction\n\n### Modifying elements → affects original ✅\n\n```java\narray[1] = 2;\n```\n\n### Reassigning the reference → does NOT affect original ❌\n\n```java\narray = new int[10]; // only changes local reference\n```\n\n---\n\n## 🧪 Try this experiment\n\nAdd this inside `modifyArray`:\n\n```java\narray = new int[5];\narray[0] = 99;\n```\n\nYou’ll see:\n\n```\nmyIntArray = [1, 2, 0, 0, 0]\n```\n\nWhy?\nBecause only the **local copy of the reference** changed.\n\n---\n\n## 📌 Correct way to avoid shared modification\n\nIf you want a **copy**, do this:\n\n```java\nint[] anotherArray = Arrays.copyOf(myIntArray, myIntArray.length);\n```\n\nNow changes won’t affect the original.\n\n---\n\n## 🎯 Interview-level takeaway\n\n> **Java is always pass-by-value.**\n> For objects (including arrays), the *value passed is the reference*.\n\nIf you want, next I can explain:\n\n1. Pass-by-value vs pass-by-reference (with diagrams)\n2. Deep copy vs shallow copy\n3. Why `final int[] arr` still allows modification\n4. Same concept using `ArrayList`\n\nJust tell me 👍\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "34c256a8-ffd2-4483-a68a-a87e308dd6fc"
+      }
+    },
+    {
+      "id": "3d045145-40d7-42c6-b262-18f6e4fa46d9",
+      "cell_type": "code",
+      "source": "package dev.lpa;\n\nimport java.util.Arrays;\n\npublic class Main {\n\n    public static void main(String[] args) {\n\n        int[] myIntArray = new int[5];\n        int[] anotherArray = myIntArray;\n\n        System.out.println(\"myIntArray = \" + Arrays.toString(myIntArray));\n        System.out.println(\"anotherArray = \" + Arrays.toString(anotherArray));\n\n        anotherArray[0] = 1;\n        modifyArray(myIntArray);\n\n        System.out.println(\"after change myIntArray = \"\n                + Arrays.toString(myIntArray));\n        System.out.println(\"after change anotherArray = \" +\n                Arrays.toString(anotherArray));\n    }\n\n    private static void modifyArray(int[] array) {\n\n        array[1] = 2;\n    }\n}\n",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "f8a815e9-a402-4f14-a3ee-c6edf2b44374",
+      "cell_type": "markdown",
+      "source": "Great example 👍\nThis code teaches **2-D arrays**, how they’re stored in Java, and the **right way to print and iterate** over them.\nI’ll explain it **step by step**, with a clear mental picture.\n\n---\n\n## 1️⃣ Declaring a 2-D array\n\n```java\nint[][] array2 = new int[4][4];\n```\n\n### What this means\n\n* 4 **rows**\n* 4 **columns**\n* Total elements = `16`\n* Default value for each `int` = `0`\n\n### How Java stores this (IMPORTANT)\n\nJava does **not** store it as a grid.\nIt stores it as:\n\n```\narray2 → int[][ ]  (array of arrays)\n   ├── int[4]\n   ├── int[4]\n   ├── int[4]\n   └── int[4]\n```\n\nEach row is a **separate array object**.\n\n---\n\n## 2️⃣ Printing a 2-D array with `toString`\n\n```java\nSystem.out.println(Arrays.toString(array2));\n```\n\n### Output (looks weird)\n\n```\n[[I@6d311334, [I@682a0b20, [I@3d075dc0, [I@214c265e]\n```\n\nWhy?\n\n* `Arrays.toString()` prints **references** for inner arrays\n* It does **not** go deep\n\n---\n\n## 3️⃣ Length of outer array\n\n```java\nSystem.out.println(\"array2.length = \" + array2.length);\n```\n\nOutput:\n\n```\narray2.length = 4\n```\n\n👉 This is the **number of rows**, NOT total elements.\n\n---\n\n## 4️⃣ Printing each row (outer loop)\n\n```java\nfor (int[] outer : array2) {\n    System.out.println(Arrays.toString(outer));\n}\n```\n\n### What happens\n\n* Each `outer` is a **1-D int[]**\n* Now `Arrays.toString()` works correctly\n\nOutput:\n\n```\n[0, 0, 0, 0]\n[0, 0, 0, 0]\n[0, 0, 0, 0]\n[0, 0, 0, 0]\n```\n\n---\n\n## 5️⃣ Filling the 2-D array (nested loops)\n\n```java\nfor (int i = 0; i < array2.length; i++) {\n    var innerArray = array2[i];\n    for (int j = 0; j < innerArray.length; j++) {\n        array2[i][j] = (i * 10) + (j + 1);\n    }\n}\n```\n\n### Key ideas here\n\n#### Outer loop (`i`)\n\n* Iterates over **rows**\n\n#### Inner loop (`j`)\n\n* Iterates over **columns**\n\n#### Value assignment logic\n\n```java\n(i * 10) + (j + 1)\n```\n\n| i | j | value |\n| - | - | ----- |\n| 0 | 0 | 1     |\n| 0 | 1 | 2     |\n| 1 | 0 | 11    |\n| 2 | 3 | 24    |\n| 3 | 3 | 34    |\n\n📦 Final array:\n\n```\n[\n [ 1,  2,  3,  4],\n [11, 12, 13, 14],\n [21, 22, 23, 24],\n [31, 32, 33, 34]\n]\n```\n\n---\n\n## 6️⃣ Why use `var innerArray`\n\n```java\nvar innerArray = array2[i];\n```\n\n* Improves readability\n* Avoids repeated indexing\n* Type inferred as `int[]`\n\nEquivalent to:\n\n```java\nint[] innerArray = array2[i];\n```\n\n---\n\n## 7️⃣ Enhanced for-loop (commented code)\n\n```java\nfor (var outer : array2) {\n    for (var element : outer) {\n        System.out.print(element + \" \");\n    }\n    System.out.println();\n}\n```\n\n* Clean, readable\n* Best when **you don’t need indexes**\n* Cannot modify row/column positions easily\n\n---\n\n## 8️⃣ Correct way to print a 2-D array\n\n```java\nSystem.out.println(Arrays.deepToString(array2));\n```\n\n### Why `deepToString` works\n\n* Recursively prints nested arrays\n* Handles multi-dimensional arrays correctly\n\nOutput:\n\n```\n[[1, 2, 3, 4], [11, 12, 13, 14], [21, 22, 23, 24], [31, 32, 33, 34]]\n```\n\n---\n\n# 🧠 Core concepts you just learned\n\n| Concept               | Meaning           |\n| --------------------- | ----------------- |\n| 2-D arrays            | Arrays of arrays  |\n| `array.length`        | Number of rows    |\n| `array[i].length`     | Number of columns |\n| `Arrays.toString`     | 1-D only          |\n| `Arrays.deepToString` | Multi-D arrays    |\n| Enhanced for-loop     | Clean iteration   |\n\n---\n\n## ⚠️ Important Java fact\n\nJava supports **jagged arrays**:\n\n```java\nint[][] jagged = new int[3][];\njagged[0] = new int[2];\njagged[1] = new int[5];\njagged[2] = new int[1];\n```\n\nRows can have different lengths!\n\n---\n\n## 🚀 What to try next\n\n1. Create a **3×5** matrix\n2. Sum each row\n3. Find max value in matrix\n4. Convert 2-D array to formatted table\n\nIf you want, I can walk you through **one of these step by step** using code like this.\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "f8a815e9-a402-4f14-a3ee-c6edf2b44374"
+      }
+    },
+    {
+      "id": "5eaaf2f8-7fc2-433a-87e1-142ec989acba",
+      "cell_type": "code",
+      "source": "package dev.lpa;\n\nimport java.util.Arrays;\n\npublic class Main {\n\n    public static void main(String[] args) {\n\n        int[][] array2 = new int[4][4];\n        System.out.println(Arrays.toString(array2));\n        System.out.println(\"array2.length = \" + array2.length);\n\n        for (int[] outer : array2) {\n            System.out.println(Arrays.toString(outer));\n        }\n\n        for (int i = 0; i < array2.length; i++) {\n            var innerArray = array2[i];\n            for (int j = 0; j < innerArray.length; j++) {\n//                System.out.print(array2[i][j] + \" \");\n                array2[i][j] = (i * 10) + (j + 1);\n            }\n//            System.out.println();\n        }\n\n//        for (var outer : array2) {\n//            for (var element : outer) {\n//                System.out.print(element + \" \");\n//            }\n//            System.out.println();\n//        }\n\n        System.out.println(Arrays.deepToString(array2));\n    }\n}\n",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}

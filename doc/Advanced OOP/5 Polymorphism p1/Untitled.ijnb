@@ -12,47 +12,20 @@
       "cell_type": "code",
       "source": "class Car{\n    private String name;\n\n    public Car(String name) {\n        this.name = name;\n    }\n\n    // getters\n    public String getName(){\n        return name;\n    }\n}\n\n\nCar mycar = new Car(\"my_car\");\nSystem.out.println(mycar);\n\nclass BMW extends Car {\n    public BMW(String name){\n        super(name);\n    }\n    \n    @Override\n    public String toString(){\n        return getname;\n    }\n}\n\nBMW mybmw = new BMW(\"my_bmw\");\nSystem.out.println(mybmw);\n",
       "metadata": {
-        "language": "java",
-        "id": "103ae683-dc28-406a-a7e7-636e7f593708",
-        "executionSummary": {
-          "executionOrder": 24,
-          "success": true
-        }
+        "language": "java"
       },
-      "execution_count": 24,
-      "outputs": [
-        {
-          "output_type": "execute_result",
-          "data": {
-            "text/plain": "REPL.$JShell$14F$Car@3b95a09c\r\nmy_bmw\r\n"
-          },
-          "metadata": {},
-          "execution_count": 24
-        }
-      ]
+      "execution_count": null,
+      "outputs": []
     },
     {
       "id": "6ed3a171-7ab7-4cef-8af3-4ca7455d5113",
       "cell_type": "code",
       "source": "class Car {\n    private String name;\n\n    public Car(String name) {\n        this.name = name;\n    }\n\n    public String getName() {\n        return name;\n    }\n}\n\nclass BMW extends Car {\n    public BMW(String name){\n        super(name);\n    }\n\n    @Override\n    public String toString() {\n        return \"BMW: \" + getName();\n    }\n}\n\nCar mycar = new Car(\"my_car\");\nSystem.out.println(mycar);      // prints object's hashcode (no toString override)\n\nBMW mybmw = new BMW(\"my_bmw\");\nSystem.out.println(mybmw);      // uses overridden toString()\n",
       "metadata": {
-        "language": "java",
-        "executionSummary": {
-          "executionOrder": 21,
-          "success": true
-        }
+        "language": "java"
       },
-      "execution_count": 21,
-      "outputs": [
-        {
-          "output_type": "execute_result",
-          "data": {
-            "text/plain": "REPL.$JShell$14F$Car@593634ad\r\nBMW: my_bmw\r\n"
-          },
-          "metadata": {},
-          "execution_count": 21
-        }
-      ]
+      "execution_count": null,
+      "outputs": []
     },
     {
       "id": "295a59f2-4560-4ee4-b7c4-0547193a45e7",

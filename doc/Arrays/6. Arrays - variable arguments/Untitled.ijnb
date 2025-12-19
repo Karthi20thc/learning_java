@@ -1,0 +1,30 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "40faf69e-9df1-4659-b1b9-0bad451d27c1",
+      "cell_type": "markdown",
+      "source": "Excellent example 👍\nThis code introduces **varargs (`...`)**, which is a *must-know Java feature*. I’ll explain it **line by line**, then give you the **mental model** and **rules** so it really sticks.\n\n---\n\n## 1️⃣ `main(String... args)` (varargs in `main`)\n\n```java\npublic static void main(String... args) {\n```\n\n* `String... args` **is the same as** `String[] args`\n* Varargs is just **syntactic sugar**\n\n✔ These are equivalent:\n\n```java\npublic static void main(String[] args)\npublic static void main(String... args)\n```\n\n---\n\n## 2️⃣ Printing text\n\n```java\nSystem.out.println(\"Hello World again\");\n```\n\nJust prints:\n\n```\nHello World again\n```\n\n---\n\n## 3️⃣ Splitting a string\n\n```java\nString[] splitStrings = \"Hello World again\".split(\" \");\n```\n\n* Splits the string by spaces\n* Result:\n\n```\n[\"Hello\", \"World\", \"again\"]\n```\n\n---\n\n## 4️⃣ Passing an array to a varargs method\n\n```java\nprintText(splitStrings);\n```\n\nThis works because:\n\n* `String...` is treated as `String[]`\n* Java passes the array directly\n\n---\n\n## 5️⃣ Varargs method\n\n```java\nprivate static void printText(String... textList) {\n```\n\n### What `String... textList` means\n\n* Accepts **0 or more** `String` arguments\n* Inside the method, `textList` is a **String array**\n\n📌 Internally:\n\n```java\nString[] textList\n```\n\n---\n\n## 6️⃣ Enhanced for-loop\n\n```java\nfor (String t : textList) {\n    System.out.println(t);\n}\n```\n\n* Loops through all provided arguments\n* Works even if array is empty\n\n---\n\n## 7️⃣ Printing separator line\n\n```java\nSystem.out.println(\"_\".repeat(20));\n```\n\n* Repeats `_` 20 times\n* Output:\n\n```\n____________________\n```\n\n---\n\n## 8️⃣ Calling varargs with ONE argument\n\n```java\nprintText(\"Hello\");\n```\n\nInternally becomes:\n\n```java\nprintText(new String[]{\"Hello\"});\n```\n\nOutput:\n\n```\nHello\n```\n\n---\n\n## 9️⃣ Calling varargs with MULTIPLE arguments\n\n```java\nprintText(\"Hello\", \"World\", \"again\");\n```\n\nInternally:\n\n```java\nprintText(new String[]{\"Hello\", \"World\", \"again\"});\n```\n\nOutput:\n\n```\nHello\nWorld\nagain\n```\n\n---\n\n## 🔟 Calling varargs with ZERO arguments\n\n```java\nprintText();\n```\n\nInternally:\n\n```java\nprintText(new String[]{});\n```\n\n* Loop runs zero times\n* No output\n* **No error**\n\n---\n\n## 1️⃣1️⃣ Joining strings\n\n```java\nString[] sArray = {\"first\", \"second\", \"third\", \"fourth\", \"fifth\"};\nSystem.out.println(String.join(\",\", sArray));\n```\n\n### What happens\n\n* Joins elements using `,`\n* Output:\n\n```\nfirst,second,third,fourth,fifth\n```\n\n---\n\n# 🧠 CORE CONCEPT: VARARGS\n\n### What varargs REALLY is\n\n```java\nString... textList\n↓\nString[] textList\n```\n\nJava converts arguments into an array **at compile time**.\n\n---\n\n## ⚠️ Important rules of varargs\n\n### 1️⃣ Only ONE varargs parameter allowed\n\n```java\nvoid test(String... a, int... b) ❌\n```\n\n### 2️⃣ Varargs MUST be the LAST parameter\n\n```java\nvoid test(int x, String... a) ✅\nvoid test(String... a, int x) ❌\n```\n\n---\n\n## 🔥 Common interview trick\n\n```java\nprintText(null);\n```\n\n❌ Causes `NullPointerException` in loop\nBecause Java thinks you passed a **null array**\n\n---\n\n## ✅ Safe version\n\n```java\nprivate static void printText(String... textList) {\n    if (textList == null) return;\n    for (String t : textList) {\n        System.out.println(t);\n    }\n}\n```\n\n---\n\n## 🧪 Try this yourself\n\n```java\nprintText(\"A\", \"B\");\nprintText(new String[]{\"X\", \"Y\"});\nprintText();\n```\n\nAll valid!\n\n---\n\n## 🎯 Final takeaway\n\n* Varargs = flexible method arguments\n* Implemented as arrays internally\n* Clean & readable APIs\n* Widely used in Java standard library\n\nIf you want next, I can explain:\n\n1. Varargs vs method overloading\n2. Varargs performance\n3. Real-world use cases\n4. Why varargs is dangerous with `null`\n\nJust tell me 👍\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "40faf69e-9df1-4659-b1b9-0bad451d27c1"
+      }
+    },
+    {
+      "id": "3d045145-40d7-42c6-b262-18f6e4fa46d9",
+      "cell_type": "code",
+      "source": "package dev.lpa;\n\npublic class Main {\n\n    public static void main(String... args) {\n\n        System.out.println(\"Hello World again\");\n\n        String[] splitStrings = \"Hello World again\".split(\" \");\n        printText(splitStrings);\n\n        System.out.println(\"_\".repeat(20));\n        printText(\"Hello\");\n\n        System.out.println(\"_\".repeat(20));\n        printText(\"Hello\", \"World\", \"again\");\n\n        System.out.println(\"_\".repeat(20));\n        printText();\n\n        String[] sArray = {\"first\", \"second\", \"third\", \"fourth\", \"fifth\"};\n        System.out.println(String.join(\",\", sArray));\n    }\n\n    private static void printText(String... textList) {\n\n        for (String t : textList) {\n            System.out.println(t);\n        }\n    }\n}",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
