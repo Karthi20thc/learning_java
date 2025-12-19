@@ -1,0 +1,62 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "b84f5f54-158a-4431-b510-72396c7068dd",
+      "cell_type": "markdown",
+      "source": "\n\nExcellent 👍\nThis **Part-3** example is where `ArrayList` starts to feel *real*.\nYou’re now learning **searching, removing, filtering, sorting, and converting lists** — exactly how lists are used in production code.\n\nI’ll explain this in **two sections**, then give you a **mental model** you can reuse.\n\n---\n\n# 📁 File 1: `Main.java` (Quick recap)\n\nThis file is **unchanged** from Part-2, so just a quick reminder of what it teaches:\n\n### Concepts here\n\n* `record GroceryItem` (immutable data)\n* Custom `toString()`\n* Array vs `ArrayList`\n* `add`, `set`, `remove`\n\nThis is your **baseline** for working with objects in lists.\n\n---\n\n# 📁 File 2: `MoreLists.java` (NEW & IMPORTANT)\n\n⚠️ **Package issue again**\n\n```java\npackage dev.lpa.dev.lpa;\n```\n\nThis likely should be:\n\n```java\npackage dev.lpa;\n```\n\nOtherwise it’s a different package.\n\n---\n\n## 1️⃣ Creating an immutable list\n\n```java\nString[] items = {\"apples\", \"bananas\", \"milk\", \"eggs\"};\n\nList<String> list = List.of(items);\n```\n\n### Key facts about `List.of`\n\n* Immutable\n* Fixed size\n* Read-only\n\n```java\nlist.add(\"x\"); // ❌ UnsupportedOperationException\n```\n\n---\n\n## 2️⃣ Creating a mutable list from it\n\n```java\nArrayList<String> groceries = new ArrayList<>(list);\n```\n\nNow you can modify it:\n\n```java\ngroceries.add(\"yogurt\");\n```\n\n---\n\n## 3️⃣ Adding another list (`addAll`)\n\n```java\nArrayList<String> nextList =\n        new ArrayList<>(List.of(\"pickles\", \"mustard\", \"cheese\"));\n\ngroceries.addAll(nextList);\n```\n\n➡ Appends all elements, keeps order.\n\n---\n\n## 4️⃣ Accessing elements\n\n```java\nSystem.out.println(\"Third item = \" + groceries.get(2));\n```\n\n* Index-based access\n* Zero-based index\n\n---\n\n## 5️⃣ Checking existence\n\n```java\nif (groceries.contains(\"mustard\")) {\n```\n\n* Uses `equals()`\n* Returns `true / false`\n\n---\n\n## 6️⃣ Handling duplicates\n\n```java\ngroceries.add(\"yogurt\");\n```\n\nNow list has duplicates.\n\n```java\nSystem.out.println(\"first = \" + groceries.indexOf(\"yogurt\"));\nSystem.out.println(\"last = \" + groceries.lastIndexOf(\"yogurt\"));\n```\n\n➡ Finds **first** and **last** occurrence.\n\n---\n\n## 7️⃣ Removing elements (VERY IMPORTANT)\n\n### Remove by index\n\n```java\ngroceries.remove(1);\n```\n\n### Remove by value\n\n```java\ngroceries.remove(\"yogurt\");\n```\n\n⚠️ Different behavior:\n\n* `remove(int)` → index\n* `remove(Object)` → value\n\n---\n\n## 8️⃣ Bulk removal\n\n```java\ngroceries.removeAll(List.of(\"apples\", \"eggs\"));\n```\n\n* Removes **all matching elements**\n\n---\n\n## 9️⃣ Filtering with `retainAll`\n\n```java\ngroceries.retainAll(List.of(\"apples\", \"milk\", \"mustard\", \"cheese\"));\n```\n\n➡ Keeps **only** these values\nEverything else is removed.\n\n---\n\n## 🔟 Clearing a list\n\n```java\ngroceries.clear();\nSystem.out.println(\"isEmpty = \" + groceries.isEmpty());\n```\n\n* List still exists\n* Size becomes 0\n\n---\n\n## 1️⃣1️⃣ Adding from arrays & lists\n\n```java\ngroceries.addAll(List.of(\"apples\", \"milk\", \"mustard\", \"cheese\"));\ngroceries.addAll(Arrays.asList(\"eggs\", \"pickles\", \"mustard\", \"ham\"));\n```\n\n### Difference\n\n| Method            | Notes           |\n| ----------------- | --------------- |\n| `List.of()`       | Immutable       |\n| `Arrays.asList()` | Fixed-size view |\n\n---\n\n## 1️⃣2️⃣ Sorting the list\n\n```java\ngroceries.sort(Comparator.naturalOrder());\n```\n\nAlphabetical order.\n\n```java\ngroceries.sort(Comparator.reverseOrder());\n```\n\nReverse alphabetical.\n\n---\n\n## 1️⃣3️⃣ Converting list → array\n\n```java\nvar groceryArray = groceries.toArray(new String[groceries.size()]);\n```\n\nWhy this form?\n\n* Correct runtime type\n* No casting required\n\nOutput:\n\n```\n[\"yogurt\", \"pickles\", \"milk\", ...]\n```\n\n---\n\n# 🧠 Mental model (VERY IMPORTANT)\n\nThink of `ArrayList` as:\n\n> **A resizable array with helper methods**\n\n| Operation       | Cost                     |\n| --------------- | ------------------------ |\n| `get()`         | Fast                     |\n| `add()`         | Fast (amortized)         |\n| `remove(index)` | Slower (shifts elements) |\n| `contains()`    | Linear search            |\n\n---\n\n# ⚠️ Interview-level pitfalls\n\n### 1️⃣ `remove(1)` vs `remove(\"1\")`\n\nOverloaded methods — very common bug.\n\n### 2️⃣ `List.of()` is immutable\n\nYou must copy it to modify.\n\n### 3️⃣ Sorting modifies the list\n\n`sort()` is **in-place**.\n\n---\n\n# 🎯 What you now know\n\nYou now fully understand:\n\n* Creating lists\n* Copying lists\n* Searching\n* Removing\n* Filtering\n* Sorting\n* Converting\n\nThis is **core Java collection knowledge**.\n\n---\n\nIf you want next, I strongly recommend:\n\n1. `Iterator` and safe removal\n2. `LinkedList` vs `ArrayList`\n3. Autoboxing (`int` ↔ `Integer`)\n4. Why `List` interface matters\n\nJust tell me 👍\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "b84f5f54-158a-4431-b510-72396c7068dd"
+      }
+    },
+    {
+      "id": "3d045145-40d7-42c6-b262-18f6e4fa46d9",
+      "cell_type": "code",
+      "source": "// Folder resource\\3 Source-code-List-ArrayList-LinkedList-Iterator-Autoboxing-ArrayList-Part-3\\ArrayLists\\src\n// 2 printable files\n// (file list disabled)\n\n// resource\\3 Source-code-List-ArrayList-LinkedList-Iterator-Autoboxing-ArrayList-Part-3\\ArrayLists\\src\\dev\\lpa\\Main.java\n1\tpackage dev.lpa;\n2\t\n3\timport java.util.ArrayList;\n4\timport java.util.Arrays;\n5\t\n6\trecord GroceryItem(String name, String type, int count) {\n7\t\n8\t    public GroceryItem(String name) {\n9\t        this(name, \"DAIRY\", 1);\n10\t    }\n11\t\n12\t    @Override\n13\t    public String toString() {\n14\t        return String.format(\"%d %s in %s\", count, name.toUpperCase(), type);\n15\t    }\n16\t}\n17\t\n18\tpublic class Main {\n19\t\n20\t    public static void main(String[] args) {\n21\t\n22\t        GroceryItem[] groceryArray = new GroceryItem[3];\n23\t        groceryArray[0] = new GroceryItem(\"milk\");\n24\t        groceryArray[1] = new GroceryItem(\"apples\", \"PRODUCE\", 6);\n25\t        groceryArray[2] = new GroceryItem(\"oranges\", \"PRODUCE\", 5);\n26\t        System.out.println(Arrays.toString(groceryArray));\n27\t\n28\t        ArrayList objectList = new ArrayList();\n29\t        objectList.add(new GroceryItem(\"Butter\"));\n30\t        objectList.add(\"Yogurt\");\n31\t\n32\t        ArrayList<GroceryItem> groceryList = new ArrayList<>();\n33\t        groceryList.add(new GroceryItem(\"Butter\"));\n34\t        groceryList.add(new GroceryItem(\"milk\"));\n35\t        groceryList.add(new GroceryItem(\"oranges\", \"PRODUCE\", 5));\n36\t        groceryList.set(0,\n37\t                new GroceryItem(\"apples\", \"PRODUCE\", 6));\n38\t        groceryList.remove(1);\n39\t        System.out.println(groceryList);\n40\t    }\n41\t}\n42\t \n// resource\\3 Source-code-List-ArrayList-LinkedList-Iterator-Autoboxing-ArrayList-Part-3\\ArrayLists\\src\\dev\\lpa\\dev\\lpa\\MoreLists.java\n1\tpackage dev.lpa.dev.lpa;\n2\t\n3\timport java.util.ArrayList;\n4\timport java.util.Arrays;\n5\timport java.util.Comparator;\n6\timport java.util.List;\n7\t\n8\tpublic class MoreLists {\n9\t\n10\t    public static void main(String[] args) {\n11\t\n12\t        String[] items = {\"apples\", \"bananas\", \"milk\", \"eggs\"};\n13\t\n14\t        List<String> list = List.of(items);\n15\t        System.out.println(list);\n16\t\n17\t        ArrayList<String> groceries = new ArrayList<>(list);\n18\t        groceries.add(\"yogurt\");\n19\t        System.out.println(groceries);\n20\t\n21\t        ArrayList<String> nextList = new ArrayList<>(\n22\t                List.of(\"pickles\", \"mustard\", \"cheese\"));\n23\t        System.out.println(nextList);\n24\t\n25\t        groceries.addAll(nextList);\n26\t        System.out.println(groceries);\n27\t\n28\t        System.out.println(\"Third item = \" + groceries.get(2));\n29\t\n30\t        if (groceries.contains(\"mustard\")) {\n31\t            System.out.println(\"List contains mustard\");\n32\t        }\n33\t\n34\t        groceries.add(\"yogurt\");\n35\t        System.out.println(\"first = \" + groceries.indexOf(\"yogurt\"));\n36\t        System.out.println(\"last = \" + groceries.lastIndexOf(\"yogurt\"));\n37\t\n38\t        System.out.println(groceries);\n39\t        groceries.remove(1);\n40\t        System.out.println(groceries);\n41\t        groceries.remove(\"yogurt\");\n42\t        System.out.println(groceries);\n43\t\n44\t        groceries.removeAll(List.of(\"apples\", \"eggs\"));\n45\t        System.out.println(groceries);\n46\t\n47\t        groceries.retainAll(List.of(\"apples\", \"milk\", \"mustard\",\n48\t                \"cheese\"));\n49\t        System.out.println(groceries);\n50\t\n51\t        groceries.clear();\n52\t        System.out.println(groceries);\n53\t        System.out.println(\"isEmpty = \" + groceries.isEmpty());\n54\t\n55\t        groceries.addAll(List.of(\"apples\", \"milk\", \"mustard\",\n56\t                \"cheese\"));\n57\t        groceries.addAll(Arrays.asList(\"eggs\", \"pickles\", \"mustard\", \"ham\"));\n58\t\n59\t        System.out.println(groceries);\n60\t        groceries.sort(Comparator.naturalOrder());\n61\t        System.out.println(groceries);\n62\t\n63\t        groceries.sort(Comparator.reverseOrder());\n64\t        System.out.println(groceries);\n65\t\n66\t        var groceryArray = groceries.toArray(new String[groceries.size()]);\n67\t        System.out.println(Arrays.toString(groceryArray));\n68\t    }\n69\t}\n70\t ",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "6c2ab854-d1bc-471d-b7b9-dc74bb46381f",
+      "cell_type": "markdown",
+      "source": "---\n### practice",
+      "metadata": {
+        "language": "markdown",
+        "id": "6c2ab854-d1bc-471d-b7b9-dc74bb46381f"
+      }
+    },
+    {
+      "id": "68ec8714-efd9-48e5-8da6-c475c8f58a2e",
+      "cell_type": "code",
+      "source": "String[] items = {\"apples\", \"bananas\", \"milk\", \"eggs\"};\nList<String> list = List.of(items);\n\nSystem.out.println(items);\nSystem.out.println(list);",
+      "metadata": {
+        "language": "java",
+        "executionSummary": {
+          "executionOrder": 3,
+          "success": true
+        }
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": "[Ljava.lang.String;@5fa7e7ff\r\n[apples, bananas, milk, eggs]\r\n"
+          },
+          "metadata": {},
+          "execution_count": 3
+        }
+      ]
+    }
+  ]
+}

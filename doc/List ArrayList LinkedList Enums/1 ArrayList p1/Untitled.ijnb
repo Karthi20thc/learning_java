@@ -1,0 +1,30 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "65bb1c10-f97f-4e1e-b224-cafed48e20f2",
+      "cell_type": "markdown",
+      "source": "Great example 👍\nThis code introduces **records**, **arrays vs `ArrayList`**, and **generics**—all very important modern Java topics. I’ll explain it **step by step**, clearly and practically.\n\n---\n\n## 1️⃣ `record GroceryItem(...)` (Modern Java feature)\n\n```java\nrecord GroceryItem(String name, String type, int count) {\n```\n\n### What a `record` is\n\nA `record` is a **compact, immutable data class** (Java 16+).\n\nJava automatically generates:\n\n* `private final` fields\n* Constructor\n* Getters (`name()`, `type()`, `count()`)\n* `toString()`\n* `equals()` and `hashCode()`\n\nEquivalent (rough idea):\n\n```java\nfinal class GroceryItem {\n    private final String name;\n    private final String type;\n    private final int count;\n}\n```\n\n---\n\n## 2️⃣ Custom constructor in a record\n\n```java\npublic GroceryItem(String name) {\n    this(name, \"DAIRY\", 1);\n}\n```\n\n### Why this exists\n\n* Allows **default values**\n* Calls the canonical constructor\n\nUsage:\n\n```java\nnew GroceryItem(\"milk\");\n```\n\nIs the same as:\n\n```java\nnew GroceryItem(\"milk\", \"DAIRY\", 1);\n```\n\n---\n\n## 3️⃣ Creating an array of records\n\n```java\nGroceryItem[] groceryArray = new GroceryItem[3];\n```\n\n* Fixed-size array (size = 3)\n* Can hold `GroceryItem` objects\n\n---\n\n## 4️⃣ Filling the array\n\n```java\ngroceryArray[0] = new GroceryItem(\"milk\");\ngroceryArray[1] = new GroceryItem(\"apples\", \"PRODUCE\", 6);\ngroceryArray[2] = new GroceryItem(\"oranges\", \"PRODUCE\", 5);\n```\n\nEach element stores a **reference** to a `GroceryItem` object.\n\n---\n\n## 5️⃣ Printing the array\n\n```java\nSystem.out.println(Arrays.toString(groceryArray));\n```\n\nOutput looks like:\n\n```\n[GroceryItem[name=milk, type=DAIRY, count=1],\n GroceryItem[name=apples, type=PRODUCE, count=6],\n GroceryItem[name=oranges, type=PRODUCE, count=5]]\n```\n\nWhy this works:\n\n* `record` auto-generates `toString()`\n* `Arrays.toString()` calls `toString()` on each element\n\n---\n\n## 6️⃣ Raw `ArrayList` (NOT recommended)\n\n```java\nArrayList objectList = new ArrayList();\n```\n\n### What this means\n\n* **Raw type**\n* No type safety\n* Can store **anything**\n\n```java\nobjectList.add(new GroceryItem(\"Butter\"));\nobjectList.add(\"Yogurt\");\n```\n\n⚠️ This compiles but is dangerous:\n\n* You may get `ClassCastException` later\n\n---\n\n## 7️⃣ Generic `ArrayList<GroceryItem>` (BEST PRACTICE)\n\n```java\nArrayList<GroceryItem> groceryList = new ArrayList<>();\ngroceryList.add(new GroceryItem(\"Butter\"));\n```\n\n### Why generics are important\n\n* Compile-time type safety\n* No casting required\n* Cleaner code\n\n❌ This will NOT compile:\n\n```java\ngroceryList.add(\"Yogurt\");\n```\n\n---\n\n## 🧠 Key differences: Array vs ArrayList\n\n| Feature     | Array  | ArrayList           |\n| ----------- | ------ | ------------------- |\n| Size        | Fixed  | Dynamic             |\n| Type safety | Yes    | Yes (with generics) |\n| Add/remove  | ❌      | ✅                   |\n| Performance | Faster | Slightly slower     |\n| Methods     | Few    | Many                |\n\n---\n\n## ⚠️ Important record rules\n\n* Records are **immutable**\n* You cannot change fields after creation\n\n```java\nitem.count = 5; // ❌ not allowed\n```\n\n---\n\n## 🎯 Core lessons from this code\n\n1. Records reduce boilerplate\n2. Arrays are fixed-size\n3. `ArrayList` grows dynamically\n4. Always use generics\n5. Raw types are dangerous\n\n---\n\n## 🔥 What to try next\n\n1. Iterate over `groceryList`\n2. Convert array → `ArrayList`\n3. Sort `groceryList` by `count`\n4. Compare two `GroceryItem` records\n\nIf you want, I can walk you through **any of these next**, step by step.\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "65bb1c10-f97f-4e1e-b224-cafed48e20f2"
+      }
+    },
+    {
+      "id": "3d045145-40d7-42c6-b262-18f6e4fa46d9",
+      "cell_type": "code",
+      "source": "package dev.lpa;\n\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\nrecord GroceryItem(String name, String type, int count) {\n\n    public GroceryItem(String name) {\n        this(name, \"DAIRY\", 1);\n    }\n}\n\npublic class Main {\n\n    public static void main(String[] args) {\n\n        GroceryItem[] groceryArray = new GroceryItem[3];\n        groceryArray[0] = new GroceryItem(\"milk\");\n        groceryArray[1] = new GroceryItem(\"apples\", \"PRODUCE\", 6);\n        groceryArray[2] = new GroceryItem(\"oranges\", \"PRODUCE\", 5);\n        System.out.println(Arrays.toString(groceryArray));\n\n        ArrayList objectList = new ArrayList();\n        objectList.add(new GroceryItem(\"Butter\"));\n        objectList.add(\"Yogurt\");\n\n        ArrayList<GroceryItem> groceryList = new ArrayList<>();\n        groceryList.add(new GroceryItem(\"Butter\"));\n    }\n}\n",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}

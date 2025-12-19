@@ -1,0 +1,20 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "836287e1-49b8-4f35-9b1a-cb987101ec35",
+      "cell_type": "markdown",
+      "source": "```java\nString[] items = {\"apples\", \"bananas\", \"milk\", \"eggs\"};\nList<String> list = List.of(items);   \n\n## here a array is converted to list?\n\n\nShort answer: **Yes — but not in the way many beginners think.**\nLet’s be precise 👇\n\n---\n\n## The code in question\n\n```java\nString[] items = {\"apples\", \"bananas\", \"milk\", \"eggs\"};\nList<String> list = List.of(items);\n```\n\n---\n\n## What actually happens (IMPORTANT)\n\n### ❌ It does **NOT** convert the array into a normal, mutable `List`\n\nJava does **not** wrap the array into a resizable list.\n\n### ✅ What `List.of(items)` really does\n\n* It **creates a new immutable `List`**\n* It **copies the references** from the array\n* The resulting list is **read-only**\n\nThink of it like this:\n\n```\nitems[]  ──▶  \"apples\" \"bananas\" \"milk\" \"eggs\"\n                │        │        │      │\nlist (immutable) ────────────────┘\n```\n\nThe **elements are shared**, but the **collection is new and immutable**.\n\n---\n\n## Properties of the resulting list\n\n```java\nList<String> list = List.of(items);\n```\n\n✔ You **can**:\n\n```java\nlist.get(0);\nlist.contains(\"milk\");\nlist.size();\n```\n\n❌ You **cannot**:\n\n```java\nlist.add(\"yogurt\");    // UnsupportedOperationException\nlist.remove(\"milk\");  // UnsupportedOperationException\nlist.set(0, \"pear\");  // UnsupportedOperationException\n```\n\n---\n\n## Very important comparison (EXAM / INTERVIEW FAVORITE)\n\n### `List.of(array)`\n\n```java\nList<String> list = List.of(items);\n```\n\n* Immutable\n* Independent of the array size\n* Safe\n* Modern Java (Java 9+)\n\n---\n\n### `Arrays.asList(array)`\n\n```java\nList<String> list = Arrays.asList(items);\n```\n\n* **Fixed-size**\n* Backed by the array\n* Changes to array reflect in list and vice versa\n\nExample:\n\n```java\nitems[0] = \"pear\";\nSystem.out.println(list); // [pear, bananas, milk, eggs]\n```\n\nBut:\n\n```java\nlist.add(\"x\"); // ❌ UnsupportedOperationException\n```\n\n---\n\n## If you want a **modifiable** list (MOST COMMON CASE)\n\n### Best practice\n\n```java\nList<String> list = new ArrayList<>(List.of(items));\n```\n\nor\n\n```java\nList<String> list = new ArrayList<>(Arrays.asList(items));\n```\n\nNow you can:\n\n```java\nlist.add(\"yogurt\"); // ✅\n```\n\n---\n\n## TL;DR (memorize this)\n\n| Method                 | Result                          |\n| ---------------------- | ------------------------------- |\n| `List.of(array)`       | New **immutable** list          |\n| `Arrays.asList(array)` | Fixed-size list backed by array |\n| `new ArrayList<>(...)` | Fully mutable list              |\n\n---\n\n## Final takeaway\n\n> `List.of(items)` **creates an immutable list containing the array elements**.\n> It does **not** convert the array into a normal, editable `ArrayList`.\n\nIf you want, next I can explain **why Java has 3 different ways** to do this and when to use each 👍\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "836287e1-49b8-4f35-9b1a-cb987101ec35"
+      }
+    }
+  ]
+}
