@@ -1,0 +1,30 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "b84f5f54-158a-4431-b510-72396c7068dd",
+      "cell_type": "markdown",
+      "source": "Great example 👍\nThis code is **specifically designed** to teach the **difference between arrays and lists**, and it highlights a **very common Java trap** with `Arrays.asList()`.\n\nI’ll explain it **step by step**, then summarize the **rules you should remember forever**.\n\n---\n\n## 1️⃣ Creating an array\n\n```java\nString[] originalArray = new String[] {\"First\", \"Second\", \"Third\"};\n```\n\n* This is a **normal Java array**\n* Fixed size = 3\n* Index-based\n* Mutable elements (you can change values)\n\nMemory:\n\n```\noriginalArray → [\"First\", \"Second\", \"Third\"]\n```\n\n---\n\n## 2️⃣ Converting array → list using `Arrays.asList`\n\n```java\nvar originalList = Arrays.asList(originalArray);\n```\n\n### ⚠️ This is the MOST IMPORTANT LINE in this program\n\nWhat **actually happens**:\n\n* `originalList` is a **fixed-size List**\n* It is **backed by the array**\n* NO new collection is created\n\nThink of it like:\n\n```\noriginalArray ──┐\n                ├── SAME DATA\noriginalList ───┘\n```\n\nThey share the **same storage**.\n\n---\n\n## 3️⃣ Modifying the list modifies the array\n\n```java\noriginalList.set(0, \"one\");\n```\n\n* `set()` is allowed\n* You are changing element at index `0`\n\nNow print:\n\n```java\nSystem.out.println(\"list: \" + originalList);\nSystem.out.println(\"array: \" + Arrays.toString(originalArray));\n```\n\n### Output:\n\n```\nlist: [one, Second, Third]\narray: [one, Second, Third]\n```\n\n➡ Changing the list **changed the array**.\n\n---\n\n## 4️⃣ Sorting the list also sorts the array\n\n```java\noriginalList.sort(Comparator.naturalOrder());\n```\n\nBecause:\n\n* List is backed by the array\n* Sorting the list rearranges the array elements\n\nPrinting again:\n\n```java\nSystem.out.println(\"array: \" + Arrays.toString(originalArray));\n```\n\n### Output:\n\n```\narray: [Second, Third, one]\n```\n\n---\n\n## 5️⃣ Why `add()` is commented out\n\n```java\n// originalList.add(\"fourth\");\n```\n\nIf you uncomment this, you get:\n\n```\nUnsupportedOperationException\n```\n\n### Why?\n\n* `Arrays.asList()` returns a **fixed-size list**\n* You cannot change its size\n* `add()` and `remove()` are not allowed\n\n---\n\n## 6️⃣ Creating a list without an array\n\n```java\nList<String> newList = Arrays.asList(\"Sunday\", \"Monday\", \"Tuesday\");\n```\n\nThis creates:\n\n* A **fixed-size list**\n* Backed by an **internal array**\n* Same rules apply\n\nPrinting:\n\n```\n[Sunday, Monday, Tuesday]\n```\n\n❌ Still cannot `add()` or `remove()`\n\n---\n\n# 🧠 CORE RULES (VERY IMPORTANT)\n\n## Rule 1️⃣ `Arrays.asList(array)`\n\n* Fixed-size list\n* Backed by the array\n* Changes reflect both ways\n\n## Rule 2️⃣ What you CAN do\n\n```java\nset()\nget()\nsort()\n```\n\n## Rule 3️⃣ What you CANNOT do\n\n```java\nadd()\nremove()\nclear()\n```\n\n---\n\n## ⚠️ Common interview trap\n\n```java\nList<String> list = Arrays.asList(array);\nlist.add(\"x\"); // ❌ Runtime exception\n```\n\n---\n\n## ✅ How to do it correctly (MOST OF THE TIME)\n\nIf you want a **normal, resizable list**, do this:\n\n```java\nList<String> list = new ArrayList<>(Arrays.asList(originalArray));\n```\n\nNow:\n\n```java\nlist.add(\"fourth\"); // ✅\n```\n\n---\n\n## 🔁 Comparison table (memorize this)\n\n| Method                 | Size    | Backed by array | Modifiable   |\n| ---------------------- | ------- | --------------- | ------------ |\n| `new String[]`         | Fixed   | —               | Values only  |\n| `Arrays.asList()`      | Fixed   | ✅               | `set()` only |\n| `List.of()`            | Fixed   | ❌               | ❌            |\n| `new ArrayList<>(...)` | Dynamic | ❌               | ✅            |\n\n---\n\n## 🎯 Final takeaway\n\n> `Arrays.asList()` does **not** give you a normal `ArrayList`.\n> It gives you a **view of the array** with list behavior.\n\nThis example is **classic Java interview material**, so you’re learning exactly the right thing 👍\n\nIf you want next, I can:\n\n* Show this bug in real production code\n* Explain why Java designed it this way\n* Compare with `List.of()`\n* Show how to safely convert between array ↔ list\n\nJust tell me 🙂\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "b84f5f54-158a-4431-b510-72396c7068dd"
+      }
+    },
+    {
+      "id": "3d045145-40d7-42c6-b262-18f6e4fa46d9",
+      "cell_type": "code",
+      "source": "// Folder resource\\Section 10\\4 Source-code-List-ArrayList-LinkedList-Iterator-Autoboxing-Arrays-vs-ArrayLists\\ArrayAndArrayLists\\src\\dev\\lpa\n// 1 printable files\n// (file list disabled)\n\n// resource\\Section 10\\4 Source-code-List-ArrayList-LinkedList-Iterator-Autoboxing-Arrays-vs-ArrayLists\\ArrayAndArrayLists\\src\\dev\\lpa\\Main.java\n1\tpackage dev.lpa;\n2\t\n3\timport java.util.Arrays;\n4\timport java.util.Comparator;\n5\timport java.util.List;\n6\t\n7\tpublic class Main {\n8\t\n9\t    public static void main(String[] args) {\n10\t\n11\t        String[] originalArray = new String[] {\"First\", \"Second\", \"Third\"};\n12\t        var originalList = Arrays.asList(originalArray);\n13\t\n14\t        originalList.set(0, \"one\");\n15\t        System.out.println(\"list: \" + originalList);\n16\t        System.out.println(\"array: \" + Arrays.toString(originalArray));\n17\t\n18\t        originalList.sort(Comparator.naturalOrder());\n19\t        System.out.println(\"array: \" + Arrays.toString(originalArray));\n20\t\n21\t//        originalList.add(\"fourth\");\n22\t\n23\t        List<String> newList = Arrays.asList(\"Sunday\", \"Monday\", \"Tuesday\");\n24\t        System.out.println(newList);\n25\t\n26\t    }\n27\t}\n28\t ",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
