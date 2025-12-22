@@ -1,0 +1,54 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "b84f5f54-158a-4431-b510-72396c7068dd",
+      "cell_type": "markdown",
+      "source": "Great 👍\nThis example is your **first clean introduction to `enum` in Java**, and it teaches *why enums exist* and *how they’re used safely*.\n\nI’ll explain **both files**, then give you the **mental model** you should keep for enums.\n\n---\n\n# 📁 File 1: `DayOfTheWeek.java`\n\n```java\npublic enum DayOfTheWeek {\n    SUN, MON, TUES, WED, THURS, FRI, SAT\n}\n```\n\n## What an `enum` is\n\nAn `enum` is a **special Java type** used to represent a **fixed set of constants**.\n\nThink of it as:\n\n> “A type that can have **only these exact values**.”\n\nHere:\n\n```java\nDayOfTheWeek\n```\n\ncan be **only one of**:\n\n```\nSUN, MON, TUES, WED, THURS, FRI, SAT\n```\n\n---\n\n## Why use `enum` instead of `String` or `int`\n\n❌ Bad:\n\n```java\nString day = \"FIRDAY\"; // typo, compiles, breaks logic\n```\n\n❌ Bad:\n\n```java\nint day = 5; // meaningless number\n```\n\n✅ Good:\n\n```java\nDayOfTheWeek day = DayOfTheWeek.FRI;\n```\n\n* Type-safe\n* No typos\n* Readable\n* Compiler checks validity\n\n---\n\n# 📁 File 2: `Main.java`\n\n---\n\n## 1️⃣ Assigning an enum value\n\n```java\nDayOfTheWeek weekDay = DayOfTheWeek.TUES;\nSystem.out.println(weekDay);\n```\n\nOutput:\n\n```\nTUES\n```\n\nWhy?\n\n* `enum` overrides `toString()` by default\n* Prints the constant name\n\n---\n\n## 2️⃣ Looping and random selection\n\n```java\nfor (int i = 0; i < 10; i++) {\n    weekDay = getRandomDay();\n```\n\n* Picks a random day each iteration\n* Demonstrates enum usage dynamically\n\n---\n\n## 3️⃣ Enum methods: `name()` and `ordinal()`\n\n```java\nSystem.out.printf(\"Name is %s, Ordinal Value = %d%n\",\n        weekDay.name(), weekDay.ordinal());\n```\n\n### `name()`\n\n* Returns the **exact identifier**\n\n```java\nFRI\n```\n\n### `ordinal()`\n\n* Returns the **position (index)** starting from `0`\n\n| Enum  | ordinal |\n| ----- | ------- |\n| SUN   | 0       |\n| MON   | 1       |\n| TUES  | 2       |\n| WED   | 3       |\n| THURS | 4       |\n| FRI   | 5       |\n| SAT   | 6       |\n\n⚠️ **Important rule**\n\n> ❌ Do **NOT** rely on `ordinal()` for business logic\n> Because changing enum order breaks behavior.\n\n---\n\n## 4️⃣ Comparing enums (VERY IMPORTANT)\n\n```java\nif (weekDay == DayOfTheWeek.FRI) {\n    System.out.println(\"Found a Friday!!!\");\n}\n```\n\n### Why `==` is correct for enums\n\n* Enums are **singletons**\n* Only one instance per constant exists\n* `==` is safe and preferred\n\n❌ Do NOT use `equals()` unnecessarily.\n\n---\n\n## 5️⃣ `values()` method (auto-generated)\n\n```java\nvar allDays = DayOfTheWeek.values();\n```\n\n* Returns an **array of all enum constants**\n* Order = declaration order\n\n---\n\n## 6️⃣ Random enum selection\n\n```java\nint randomInteger = new Random().nextInt(7);\nreturn allDays[randomInteger];\n```\n\n* Picks a random index\n* Returns corresponding enum constant\n\n⚠️ Safer version:\n\n```java\nnew Random().nextInt(DayOfTheWeek.values().length);\n```\n\n(Prevents bugs if enum size changes.)\n\n---\n\n# 🧠 Mental model of enums (IMPORTANT)\n\nAn enum is:\n\n* A **class**\n* With a **fixed number of instances**\n* Created by the JVM\n* Immutable\n* Type-safe\n\nBehind the scenes:\n\n```java\npublic final class DayOfTheWeek extends Enum<DayOfTheWeek> {\n    public static final DayOfTheWeek SUN = new DayOfTheWeek(...);\n    ...\n}\n```\n\n---\n\n# ⚠️ Common enum mistakes\n\n### ❌ Using ordinal for logic\n\n```java\nif (day.ordinal() == 5) // ❌ fragile\n```\n\n### ❌ Comparing enums to strings\n\n```java\nif (day.equals(\"FRI\")) // ❌\n```\n\n---\n\n# ✅ Best practices with enums\n\n✔ Use `switch` with enums\n✔ Compare with `==`\n✔ Add fields & methods if needed\n✔ Avoid using `ordinal()` for logic\n\n---\n\n# 🎯 Final takeaway\n\nThis example teaches you:\n\n✔ Why enums exist\n✔ How to use them safely\n✔ Built-in enum methods\n✔ Random enum selection\n✔ Correct comparison\n\nEnums are **one of Java’s best features** when used correctly 👍\n\n---\n\nIf you want next, I can explain:\n\n1. Enums with fields & constructors\n2. Enums in `switch`\n3. Enum vs constants (`static final`)\n4. Real-world enum design patterns\n\nJust tell me 😊\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "b84f5f54-158a-4431-b510-72396c7068dd"
+      }
+    },
+    {
+      "id": "3d045145-40d7-42c6-b262-18f6e4fa46d9",
+      "cell_type": "code",
+      "source": "// Folder resource\\Section 10\\15 Source-code-List-ArrayList-LinkedList-Iterator-Autoboxing-Introduction-to-the-enum-type\\EnumProject\\src\n// 2 printable files\n// (file list disabled)\n\n// resource\\Section 10\\15 Source-code-List-ArrayList-LinkedList-Iterator-Autoboxing-Introduction-to-the-enum-type\\EnumProject\\src\\dev\\lpa\\DayOfTheWeek.java\n1\tpackage dev.lpa;\n2\t\n3\tpublic enum DayOfTheWeek {\n4\t\n5\t    SUN, MON, TUES, WED, THURS, FRI, SAT\n6\t}\n7\t \n// resource\\Section 10\\15 Source-code-List-ArrayList-LinkedList-Iterator-Autoboxing-Introduction-to-the-enum-type\\EnumProject\\src\\dev\\lpa\\Main.java\n1\tpackage dev.lpa;\n2\t\n3\timport java.util.Random;\n4\t\n5\tpublic class Main {\n6\t\n7\t    public static void main(String[] args) {\n8\t\n9\t        DayOfTheWeek weekDay = DayOfTheWeek.TUES;\n10\t        System.out.println(weekDay);\n11\t\n12\t        for (int i = 0; i < 10; i++ ) {\n13\t            weekDay = getRandomDay();\n14\t\n15\t            System.out.printf(\"Name is %s, Ordinal Value = %d%n\",\n16\t                    weekDay.name(), weekDay.ordinal());\n17\t\n18\t            if (weekDay == DayOfTheWeek.FRI) {\n19\t                System.out.println(\"Found a Friday!!!\");\n20\t            }\n21\t\n22\t        }\n23\t    }\n24\t\n25\t    public static DayOfTheWeek getRandomDay() {\n26\t\n27\t        int randomInteger = new Random().nextInt(7);\n28\t        var allDays = DayOfTheWeek.values();\n29\t\n30\t        return allDays[randomInteger];\n31\t    }\n32\t\n33\t}",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "7b4cd2a9-0fc3-4ce5-8a62-a45994cc47b8",
+      "cell_type": "code",
+      "source": "enum DayOfTheWeek {\n    SUN, MON, TUES, WED, THURS, FRI, SAT\n}\n\nSystem.out.println(DayOfTheWeek.getClass()); // non-static method getClass() cannot be referenced from a static context\nSystem.out.println(DayOfTheWeek.TUES.getClass()); // class REPL.$JShell$4$DayOfTheWeek\nSystem.out.println(DayOfTheWeek.TUES);\n\n\nSystem.out.println(DayOfTheWeek.values().getClass());\nSystem.out.println(Arrays.toString(DayOfTheWeek.values()));\n\n\n\n//! wrong\n// System.out.println(typeOf(DayOfTheWeek.values()));\n// correct\nSystem.out.println(DayOfTheWeek.values().getClass()); // class [LREPL.$JShell$4$DayOfTheWeek;",
+      "metadata": {
+        "language": "java",
+        "id": "7b4cd2a9-0fc3-4ce5-8a62-a45994cc47b8",
+        "executionSummary": {
+          "executionOrder": 19,
+          "success": false
+        }
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": "non-static method getClass() cannot be referenced from a static context\nSystem.out.println(DayOfTheWeek.getClass());\n                   ^-------------------^\nclass REPL.$JShell$4$DayOfTheWeek\r\nTUES\r\nclass [LREPL.$JShell$4$DayOfTheWeek;\r\n[SUN, MON, TUES, WED, THURS, FRI, SAT]\r\nclass [LREPL.$JShell$4$DayOfTheWeek;\r\n"
+          },
+          "metadata": {},
+          "execution_count": 19
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "b84f5f54-158a-4431-b510-72396c7068dd",
+      "cell_type": "markdown",
+      "source": "Excellent 👍\nThis **Part-2 LinkedList example** is all about **how to traverse (iterate) a list properly**, and *why different iteration styles matter*, especially for `LinkedList`.\n\nI’ll explain it in **clear layers**, starting from setup → retrieval → iteration strategies → why `ListIterator` is important.\n\n---\n\n# 1️⃣ Setup (same as Part-1, quick recap)\n\n```java\nvar placesToVisit = new LinkedList<String>();\n```\n\nYou create a `LinkedList<String>` and populate it using `addMoreElements`.\n\nAfter this method runs, the list looks like something like:\n\n```\n[Alice Springs, Brisbane, Darwin, Canberra, Sydney, Hobart, Melbourne, Toowoomba]\n```\n\n(Exact order depends on insertions, but this is the idea.)\n\n---\n\n# 2️⃣ Why many methods are commented out\n\n```java\n// removeElements(placesToVisit);\n// gettingElements(placesToVisit);\n```\n\nThis is **intentional**.\n\n👉 The lesson here focuses on **iteration**, not modification or retrieval.\nOnly **one itinerary method** is called:\n\n```java\nprintItinerary3(placesToVisit);\n```\n\n---\n\n# 3️⃣ Retrieving elements (conceptual understanding)\n\n### Method: `gettingElements`\n\nThis method demonstrates **how to read data** from a `LinkedList`.\n\n```java\nlist.get(4);        // index-based access (slow for LinkedList)\nlist.getFirst();    // fast\nlist.getLast();     // fast\n```\n\n### Index lookups\n\n```java\nlist.indexOf(\"Darwin\");\nlist.lastIndexOf(\"Melbourne\");\n```\n\nThese scan the list **linearly**.\n\n---\n\n### Queue-style retrieval\n\n```java\nlist.element(); // retrieves first element, throws exception if empty\n```\n\n---\n\n### Stack / Deque-style retrieval\n\n```java\nlist.peek();       // first element, null if empty\nlist.peekFirst();  // same\nlist.peekLast();   // last element\n```\n\n🔑 **Key difference**\n\n* `get*()` → throws exception if empty\n* `peek*()` → safe (returns `null`)\n\n---\n\n# 4️⃣ Three ways to print the itinerary (CORE LESSON)\n\nAll three methods produce the **same output**, but with **very different performance and style**.\n\n---\n\n## 🟡 Method 1: Index-based loop (NOT recommended for LinkedList)\n\n```java\npublic static void printItinerary(LinkedList<String> list) {\n    for (int i = 1; i < list.size(); i++) {\n        System.out.println(\"--> From: \" + list.get(i - 1) + \" to \" + list.get(i));\n    }\n}\n```\n\n### Problem here\n\n* `list.get(i)` on a `LinkedList` is **O(n)**\n* Loop becomes **O(n²)**\n\n❌ Bad for large lists\n✅ Works, but inefficient\n\n---\n\n## 🟡 Method 2: Enhanced for-loop (better, but limited)\n\n```java\nfor (String town : list) {\n    System.out.println(\"--> From: \" + previousTown + \" to \" + town);\n}\n```\n\n### Pros\n\n* Clean\n* No indexing\n* Efficient traversal\n\n### Cons\n\n* No control over position\n* Cannot easily go backward\n* Cannot safely modify list during iteration\n\nGood, but **not flexible enough**.\n\n---\n\n## 🟢 Method 3: `ListIterator` (BEST PRACTICE)\n\n```java\nListIterator<String> iterator = list.listIterator(1);\n```\n\nThis starts iteration at **index 1**, not 0.\n\n```java\nwhile (iterator.hasNext()) {\n    var town = iterator.next();\n    System.out.println(\"--> From: \" + previousTown + \" to \" + town);\n    previousTown = town;\n}\n```\n\n### Why this is the BEST approach\n\n* Designed specifically for lists\n* Efficient for `LinkedList`\n* Can move **forward and backward**\n* Can **add, remove, replace** safely during iteration\n\n---\n\n# 5️⃣ Why `listIterator(1)` matters\n\n```java\nlist.listIterator(1);\n```\n\nYou skip the first town because:\n\n* First town = starting point\n* Iteration should go **from second town onward**\n\nThis avoids awkward checks inside the loop.\n\n---\n\n# 6️⃣ Mental model of `ListIterator`\n\nThink of `ListIterator` as:\n\n> “A cursor that walks node-by-node through the linked list”\n\nCapabilities:\n\n* `hasNext()` / `next()`\n* `hasPrevious()` / `previous()`\n* `add()`, `remove()`, `set()`\n\nNone of this is possible with a normal `for-each` loop.\n\n---\n\n# 7️⃣ Why this matters for real applications\n\nIn real apps:\n\n* Navigation (next / previous)\n* Undo / redo\n* Playlist traversal\n* Route planning\n* Text editors\n\n👉 **`ListIterator` is the correct tool**\n\n---\n\n# 🧠 Big takeaways (VERY IMPORTANT)\n\n### ✅ `ArrayList`\n\n* Use index-based loops\n* Fast random access\n\n### ✅ `LinkedList`\n\n* Avoid `get(i)` in loops\n* Prefer:\n\n  * `Iterator`\n  * `ListIterator`\n\n### ❌ Never do this on `LinkedList`\n\n```java\nfor (int i = 0; i < list.size(); i++) {\n    list.get(i);\n}\n```\n\n---\n\n# 🎯 Final summary\n\nThis code teaches you:\n\n✔ Why iteration strategy matters\n✔ How `LinkedList` differs from `ArrayList`\n✔ When `ListIterator` is the right choice\n✔ How to write clean, efficient traversal logic\n\nYou’re now learning **intermediate-level Java collections**, not beginner stuff anymore 👌\n\n---\n\nIf you want next, I strongly recommend:\n\n1. Modifying a list safely using `ListIterator`\n2. `Iterator` vs `ListIterator`\n3. `ArrayDeque` vs `LinkedList`\n4. Performance comparison with real examples\n\nJust tell me 👍\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "b84f5f54-158a-4431-b510-72396c7068dd"
+      }
+    },
+    {
+      "id": "3d045145-40d7-42c6-b262-18f6e4fa46d9",
+      "cell_type": "code",
+      "source": "// Folder resource\\Section 10\\7 Source-code-List-ArrayList-LinkedList-Iterator-Autoboxing-LinkedList-Part-2\\LinkedLists\\src\n// 1 printable files\n// (file list disabled)\n\n// resource\\Section 10\\7 Source-code-List-ArrayList-LinkedList-Iterator-Autoboxing-LinkedList-Part-2\\LinkedLists\\src\\dev\\lpa\\Main.java\n1\tpackage dev.lpa;\n2\t\n3\timport java.util.LinkedList;\n4\timport java.util.ListIterator;\n5\t\n6\tpublic class Main {\n7\t\n8\t    public static void main(String[] args) {\n9\t\n10\t//        LinkedList<String> placesToVisit = new LinkedList<>();\n11\t        var placesToVisit = new LinkedList<String>();\n12\t\n13\t        placesToVisit.add(\"Sydney\");\n14\t        placesToVisit.add(0, \"Canberra\");\n15\t        System.out.println(placesToVisit);\n16\t\n17\t        addMoreElements(placesToVisit);\n18\t        System.out.println(placesToVisit);\n19\t\n20\t//        removeElements(placesToVisit);\n21\t//        System.out.println(placesToVisit);\n22\t\n23\t//        gettingElements(placesToVisit);\n24\t\n25\t        printItinerary3(placesToVisit);\n26\t\n27\t    }\n28\t\n29\t    private static void addMoreElements(LinkedList<String> list) {\n30\t\n31\t        list.addFirst(\"Darwin\");\n32\t        list.addLast(\"Hobart\");\n33\t        // Queue methods\n34\t        list.offer(\"Melbourne\");\n35\t        list.offerFirst(\"Brisbane\");\n36\t        list.offerLast(\"Toowoomba\");\n37\t        // Stack Methods\n38\t        list.push(\"Alice Springs\");\n39\t\n40\t    }\n41\t\n42\t    private static void removeElements(LinkedList<String> list) {\n43\t\n44\t        list.remove(4);\n45\t        list.remove(\"Brisbane\");\n46\t\n47\t        System.out.println(list);\n48\t        String s1 = list.remove(); // removes first element\n49\t        System.out.println(s1 + \" was removed\");\n50\t\n51\t        String s2 = list.removeFirst(); // removes first element\n52\t        System.out.println(s2 + \" was removed\");\n53\t\n54\t        String s3 = list.removeLast(); // removes last element\n55\t        System.out.println(s3 + \" was removed\");\n56\t        // Queue/Deque poll methods\n57\t        String p1 = list.poll();  // removes first element\n58\t        System.out.println(p1 + \" was removed\");\n59\t        String p2 = list.pollFirst();  // removes first element\n60\t        System.out.println(p2 + \" was removed\");\n61\t        String p3 = list.pollLast();  // removes last element\n62\t        System.out.println(p3 + \" was removed\");\n63\t\n64\t        list.push(\"Sydney\");\n65\t        list.push(\"Brisbane\");\n66\t        list.push(\"Canberra\");\n67\t        System.out.println(list);\n68\t\n69\t        String p4 = list.pop();  // removes first element\n70\t        System.out.println(p4 + \" was removed\");\n71\t    }\n72\t\n73\t    private static void gettingElements(LinkedList<String> list) {\n74\t\n75\t        System.out.println(\"Retrieved Element = \" + list.get(4));\n76\t\n77\t        System.out.println(\"First Element = \" + list.getFirst());\n78\t        System.out.println(\"Last Element = \" + list.getLast());\n79\t\n80\t        System.out.println(\"Darwin is at position: \" + list.indexOf(\"Darwin\"));\n81\t        System.out.println(\"Melbourne is at position: \" +\n82\t                list.lastIndexOf(\"Melbourne\"));\n83\t        // Queue retrieval method\n84\t        System.out.println(\"Element from element() = \" + list.element());\n85\t        // Stack retrieval methods\n86\t        System.out.println(\"Element from peek() = \" + list.peek());\n87\t        System.out.println(\"Element from peekFirst() = \" + list.peekFirst());\n88\t        System.out.println(\"Element from peekLast() = \" + list.peekLast());\n89\t    }\n90\t\n91\t    public static void printItinerary(LinkedList<String> list) {\n92\t\n93\t        System.out.println(\"Trip starts at \" + list.getFirst());\n94\t        for (int i = 1; i < list.size(); i++) {\n95\t            System.out.println(\"--> From: \" + list.get(i - 1) + \" to \" + list.get(i));\n96\t        }\n97\t        System.out.println(\"Trip ends at \" + list.getLast());\n98\t    }\n99\t\n100\t    public static void printItinerary2(LinkedList<String> list) {\n101\t\n102\t        System.out.println(\"Trip starts at \" + list.getFirst());\n103\t        String previousTown = list.getFirst();\n104\t        for (String town : list) {\n105\t            System.out.println(\"--> From: \" + previousTown + \" to \" + town);\n106\t            previousTown = town;\n107\t        }\n108\t\n109\t        System.out.println(\"Trip ends at \" + list.getLast());\n110\t    }\n111\t\n112\t    public static void printItinerary3(LinkedList<String> list) {\n113\t\n114\t        System.out.println(\"Trip starts at \" + list.getFirst());\n115\t        String previousTown = list.getFirst();\n116\t        ListIterator<String> iterator = list.listIterator(1);\n117\t        while (iterator.hasNext()) {\n118\t            var town = iterator.next();\n119\t            System.out.println(\"--> From: \" + previousTown + \" to \" + town);\n120\t            previousTown = town;\n121\t        }\n122\t\n123\t        System.out.println(\"Trip ends at \" + list.getLast());\n124\t    }\n125\t}\n126\t\n127\t ",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "95977aba-ad19-49dc-9df6-2ff22fed9299",
+      "cell_type": "markdown",
+      "source": "#### practice",
+      "metadata": {
+        "language": "markdown",
+        "id": "95977aba-ad19-49dc-9df6-2ff22fed9299"
+      }
+    },
+    {
+      "id": "6378ee85-a460-46cc-8a26-868c5249df43",
+      "cell_type": "code",
+      "source": " LinkedList<String> my_linkedlist = new LinkedList<String>();\n\n my_linkedlist.add(\"hello\");\n my_linkedlist.add(\"hello\");\n\n System.out.println(my_linkedlist);",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "e264abe9-1b7a-4235-adfe-2bc4bd631377",
+      "cell_type": "code",
+      "source": " LinkedList<String> my_linkedlist = new LinkedList<String>();\n\n my_linkedlist.add(\"hello1\");\n my_linkedlist.add(\"hello\");\n my_linkedlist.remove(\"hello\");\n\n\n System.out.println(my_linkedlist);\n System.out.println( my_linkedlist.getFirst());",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "b7d5b952-8a52-4391-b727-3d2d8e2483cc",
+      "cell_type": "code",
+      "source": " LinkedList<String> my_linkedlist = new LinkedList<String>();\n\n my_linkedlist.add(\"hello1\");\n my_linkedlist.add(\"hello2\");\n my_linkedlist.remove(\"hello\");\n\nListIterator<String> iterator =  my_linkedlist.listIterator();\n\n System.out.println(my_linkedlist);\n//  System.out.println( my_linkedlist.getFirst());\n\n//! wrong\n//  System.out.println(my_linkedlist.hasNext());\n\n// correct\n System.out.println(iterator.hasNext());\n System.out.println(iterator.next());\n System.out.println(iterator.next());\n//  System.out.println(iterator.next());",
+      "metadata": {
+        "language": "java",
+        "executionSummary": {
+          "executionOrder": 35,
+          "success": true
+        }
+      },
+      "execution_count": 35,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": "[hello1, hello2]\r\ntrue\r\nhello1\r\nhello2\r\n"
+          },
+          "metadata": {},
+          "execution_count": 35
+        }
+      ]
+    }
+  ]
+}

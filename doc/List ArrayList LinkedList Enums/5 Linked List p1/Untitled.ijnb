@@ -1,0 +1,75 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "ea8b8645-9fc8-42a9-9d14-57394ae0cd09",
+      "cell_type": "markdown",
+      "source": "---\n---\n---",
+      "metadata": {
+        "language": "markdown",
+        "id": "ea8b8645-9fc8-42a9-9d14-57394ae0cd09"
+      }
+    },
+    {
+      "id": "473073ae-c266-4d3c-9a7d-7b74b3b0f865",
+      "cell_type": "markdown",
+      "source": "",
+      "metadata": {
+        "language": "markdown",
+        "id": "473073ae-c266-4d3c-9a7d-7b74b3b0f865"
+      }
+    },
+    {
+      "id": "9f201ec2-6b64-473d-90bb-551363f8df0c",
+      "cell_type": "markdown",
+      "source": "",
+      "metadata": {
+        "language": "markdown",
+        "id": "9f201ec2-6b64-473d-90bb-551363f8df0c"
+      }
+    },
+    {
+      "id": "f45da105-447b-471e-82e9-48c3c2b30ecf",
+      "cell_type": "markdown",
+      "source": "",
+      "metadata": {
+        "language": "markdown",
+        "id": "f45da105-447b-471e-82e9-48c3c2b30ecf"
+      }
+    },
+    {
+      "id": "c0935c87-c69b-4224-8959-4b7a2d1a592e",
+      "cell_type": "markdown",
+      "source": "",
+      "metadata": {
+        "language": "markdown",
+        "id": "c0935c87-c69b-4224-8959-4b7a2d1a592e"
+      }
+    },
+    {
+      "id": "eb8fc126-f811-4235-8547-bc773dce5686",
+      "cell_type": "markdown",
+      "source": "\n---\nGreat 👍\nThis example is your **first real dive into `LinkedList`**, and it’s very important because `LinkedList` behaves like **three data structures at once**:\n\n> **List + Queue + Stack**\n\nI’ll explain this **step by step**, and I’ll show **what the list looks like after each operation** so it’s easy to follow.\n\n---\n\n# 1️⃣ Creating a `LinkedList`\n\n```java\nvar placesToVisit = new LinkedList<String>();\n```\n\n* `LinkedList<String>` stores `String` values\n* `var` just lets Java infer the type\n* Functionally same as:\n\n  ```java\n  LinkedList<String> placesToVisit = new LinkedList<>();\n  ```\n\n---\n\n## Adding initial elements\n\n```java\nplacesToVisit.add(\"Sydney\");\nplacesToVisit.add(0, \"Canberra\");\nSystem.out.println(placesToVisit);\n```\n\n### What happens\n\n1. `\"Sydney\"` is added at the end\n2. `\"Canberra\"` is inserted at index `0`\n\n📌 List now:\n\n```\n[Canberra, Sydney]\n```\n\n---\n\n# 2️⃣ Adding elements using different behaviors\n\n```java\naddMoreElements(placesToVisit);\n```\n\nLet’s go **line by line** inside that method.\n\n---\n\n## Inside `addMoreElements`\n\n### 2️⃣1️⃣ List-style methods\n\n```java\nlist.addFirst(\"Darwin\");\nlist.addLast(\"Hobart\");\n```\n\n📌 List:\n\n```\n[Darwin, Canberra, Sydney, Hobart]\n```\n\n---\n\n### 2️⃣2️⃣ Queue-style methods\n\n```java\nlist.offer(\"Melbourne\");      // same as addLast\nlist.offerFirst(\"Brisbane\");\nlist.offerLast(\"Toowoomba\");\n```\n\n📌 List:\n\n```\n[Brisbane, Darwin, Canberra, Sydney, Hobart, Melbourne, Toowoomba]\n```\n\n> `offer*()` is preferred in queues because it **doesn’t throw exceptions** when capacity is limited.\n\n---\n\n### 2️⃣3️⃣ Stack-style method\n\n```java\nlist.push(\"Alice Springs\");\n```\n\n* `push()` = add to **front**\n* Stack behavior (LIFO)\n\n📌 List:\n\n```\n[Alice Springs, Brisbane, Darwin, Canberra, Sydney, Hobart, Melbourne, Toowoomba]\n```\n\n---\n\n### Print after adding\n\n```java\nSystem.out.println(placesToVisit);\n```\n\nYou’ll see the list in the order above.\n\n---\n\n# 3️⃣ Removing elements\n\n```java\nremoveElements(placesToVisit);\n```\n\nThis method demonstrates **many different removal APIs**.\n\n---\n\n## Inside `removeElements`\n\n### 3️⃣1️⃣ Remove by index & by value\n\n```java\nlist.remove(4);\nlist.remove(\"Brisbane\");\n```\n\n* `remove(4)` → removes element at index 4\n* `remove(\"Brisbane\")` → removes first matching value\n\n📌 List changes accordingly.\n\n---\n\n### Print current list\n\n```java\nSystem.out.println(list);\n```\n\n---\n\n## 3️⃣2️⃣ Removing from the front\n\n```java\nString s1 = list.remove();\n```\n\n* Removes **first element**\n* Throws exception if list is empty\n\n```java\nString s2 = list.removeFirst();\n```\n\n* Same behavior as `remove()`\n\n📌 Both remove from the **head** of the list.\n\n---\n\n## 3️⃣3️⃣ Removing from the end\n\n```java\nString s3 = list.removeLast();\n```\n\n* Removes last element\n\n---\n\n## 3️⃣4️⃣ Queue-style removals (`poll`)\n\n```java\nString p1 = list.poll();\nString p2 = list.pollFirst();\nString p3 = list.pollLast();\n```\n\n### Difference between `remove` and `poll`\n\n| Method     | If list empty      |\n| ---------- | ------------------ |\n| `remove()` | ❌ throws exception |\n| `poll()`   | ✅ returns `null`   |\n\n---\n\n## 3️⃣5️⃣ Stack-style operations again\n\n```java\nlist.push(\"Sydney\");\nlist.push(\"Brisbane\");\nlist.push(\"Canberra\");\n```\n\n📌 List:\n\n```\n[Canberra, Brisbane, Sydney, ...]\n```\n\n---\n\n### Stack pop\n\n```java\nString p4 = list.pop();\n```\n\n* Removes **first element**\n* LIFO behavior\n\n---\n\n# 🧠 Big picture (VERY IMPORTANT)\n\n### `LinkedList` implements:\n\n* `List`\n* `Deque`\n* `Queue`\n\nThat’s why it supports:\n\n* `add(index)`\n* `addFirst / addLast`\n* `offer / poll`\n* `push / pop`\n\n---\n\n# ⚠️ When to use `LinkedList` vs `ArrayList`\n\n| Operation                | Better choice                          |\n| ------------------------ | -------------------------------------- |\n| Random access (`get(i)`) | `ArrayList`                            |\n| Insert/remove at ends    | `LinkedList`                           |\n| Queue / Deque            | `LinkedList`                           |\n| Stack                    | `Deque` (`LinkedList` or `ArrayDeque`) |\n\n---\n\n# ❗ Important performance note\n\n`LinkedList`:\n\n* ❌ Slow random access\n* ✅ Fast insert/remove at ends\n* ❌ More memory overhead\n\nIn **real projects**, `ArrayList` is more common unless you specifically need queue/deque behavior.\n\n---\n\n# 🎯 Final takeaway\n\nThis code teaches you:\n\n✔ One class = multiple data structures\n✔ Different APIs for same behavior\n✔ Why method names matter\n✔ Safe vs unsafe removals\n\nYou’re now **past beginner level** with collections 👌\n\n---\n\nIf you want next, I recommend:\n\n1. `Iterator` and safe removal\n2. `ArrayDeque` vs `LinkedList`\n3. Why stacks shouldn’t use `Stack`\n4. Time complexity comparison\n\nJust tell me 👍\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "eb8fc126-f811-4235-8547-bc773dce5686"
+      }
+    },
+    {
+      "id": "236e10ba-ce3a-43a2-be78-ddd0cd41954c",
+      "cell_type": "code",
+      "source": "// Folder resource\\Section 10\\6 Source-code-List-ArrayList-LinkedList-Iterator-Autoboxing-LinkedList-Part-1\\LinkedLists\\src\n// 1 printable files\n// (file list disabled)\n\n// resource\\Section 10\\6 Source-code-List-ArrayList-LinkedList-Iterator-Autoboxing-LinkedList-Part-1\\LinkedLists\\src\\dev\\lpa\\Main.java\n1\tpackage dev.lpa;\n2\t\n3\timport java.util.LinkedList;\n4\t\n5\tpublic class Main {\n6\t\n7\t    public static void main(String[] args) {\n8\t\n9\t//        LinkedList<String> placesToVisit = new LinkedList<>();\n10\t        var placesToVisit = new LinkedList<String>();\n11\t\n12\t        placesToVisit.add(\"Sydney\");\n13\t        placesToVisit.add(0, \"Canberra\");\n14\t        System.out.println(placesToVisit);\n15\t\n16\t        addMoreElements(placesToVisit);\n17\t        System.out.println(placesToVisit);\n18\t\n19\t        removeElements(placesToVisit);\n20\t        System.out.println(placesToVisit);\n21\t\n22\t    }\n23\t\n24\t    private static void addMoreElements(LinkedList<String> list) {\n25\t\n26\t        list.addFirst(\"Darwin\");\n27\t        list.addLast(\"Hobart\");\n28\t        // Queue methods\n29\t        list.offer(\"Melbourne\");\n30\t        list.offerFirst(\"Brisbane\");\n31\t        list.offerLast(\"Toowoomba\");\n32\t        // Stack Methods\n33\t        list.push(\"Alice Springs\");\n34\t\n35\t    }\n36\t\n37\t    private static void removeElements(LinkedList<String> list) {\n38\t\n39\t        list.remove(4);\n40\t        list.remove(\"Brisbane\");\n41\t\n42\t        System.out.println(list);\n43\t        String s1 = list.remove(); // removes first element\n44\t        System.out.println(s1 + \" was removed\");\n45\t\n46\t        String s2 = list.removeFirst(); // removes first element\n47\t        System.out.println(s2 + \" was removed\");\n48\t\n49\t        String s3 = list.removeLast(); // removes last element\n50\t        System.out.println(s3 + \" was removed\");\n51\t        // Queue/Deque poll methods\n52\t        String p1 = list.poll();  // removes first element\n53\t        System.out.println(p1 + \" was removed\");\n54\t        String p2 = list.pollFirst();  // removes first element\n55\t        System.out.println(p2 + \" was removed\");\n56\t        String p3 = list.pollLast();  // removes last element\n57\t        System.out.println(p3 + \" was removed\");\n58\t\n59\t        list.push(\"Sydney\");\n60\t        list.push(\"Brisbane\");\n61\t        list.push(\"Canberra\");\n62\t        System.out.println(list);\n63\t\n64\t        String p4 = list.pop();  // removes first element\n65\t        System.out.println(p4 + \" was removed\");\n66\t\n67\t    }\n68\t}\n69\t ",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
