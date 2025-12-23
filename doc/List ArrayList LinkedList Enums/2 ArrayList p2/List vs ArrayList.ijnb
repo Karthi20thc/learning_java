@@ -1,0 +1,30 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "8d851e9a-e27c-45eb-b57f-ec9e9899d25c",
+      "cell_type": "markdown",
+      "source": "Short answer: **No, `List` and `ArrayList` are NOT the same** — but they are **closely related**.\n\nLet’s make this very clear and practical 👇\n\n---\n\n## 1️⃣ What `List` is\n\n```java\nList<String> list;\n```\n\n* `List` is an **interface**\n* It defines **what operations are allowed**\n* It does **not** store data itself\n\nThink of `List` as a **contract**:\n\n> “Any class that claims to be a `List` must support add, remove, get, size, etc.”\n\nYou **cannot** do this:\n\n```java\nList<String> list = new List<>(); // ❌ NOT allowed\n```\n\n---\n\n## 2️⃣ What `ArrayList` is\n\n```java\nArrayList<String> arrayList = new ArrayList<>();\n```\n\n* `ArrayList` is a **concrete class**\n* It **implements the List interface**\n* It actually stores data internally using a **resizable array**\n\nSo:\n\n```java\nArrayList ⟶ implements ⟶ List\n```\n\n---\n\n## 3️⃣ Why this works\n\n```java\nList<String> list = new ArrayList<>();\n```\n\nBecause:\n\n* `ArrayList` **is a** `List`\n* Polymorphism allows this\n\nThis is the **recommended way** to write Java code.\n\n---\n\n## 4️⃣ Key differences (important)\n\n| Aspect             | `List`           | `ArrayList`         |\n| ------------------ | ---------------- | ------------------- |\n| Type               | Interface        | Class               |\n| Can create object? | ❌ No             | ✅ Yes               |\n| Purpose            | Defines behavior | Implements behavior |\n| Storage            | None             | Resizable array     |\n| add/remove/get     | Defined          | Implemented         |\n\n---\n\n## 5️⃣ Why Java developers prefer `List`\n\n### ✅ Best practice\n\n```java\nList<String> names = new ArrayList<>();\n```\n\n### ❌ Not recommended\n\n```java\nArrayList<String> names = new ArrayList<>();\n```\n\n### Why?\n\nBecause later you can change implementation easily:\n\n```java\nList<String> names = new LinkedList<>();\n```\n\nWithout changing the rest of your code.\n\n---\n\n## 6️⃣ Simple real-world analogy 🧠\n\n* **List** → Interface of a TV remote (buttons defined)\n* **ArrayList** → A specific remote model that actually works\n\nYou use the **interface**, not the brand.\n\n---\n\n## 7️⃣ Very common interview question ⚠️\n\n> **Is `ArrayList` a `List`?**\n\n✅ Yes\n\n> **Is `List` an `ArrayList`?**\n\n❌ No\n\n---\n\n## 8️⃣ Summary (memorize this)\n\n* `List` = **what you can do**\n* `ArrayList` = **how it is done**\n* Always program to the **interface**, not the implementation\n\n---\n\nIf you want, next I can explain:\n\n* `List` vs `Set`\n* `ArrayList` vs `LinkedList`\n* Why Java collections are designed this way\n* When NOT to use `ArrayList`\n\nJust tell me 👍\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "8d851e9a-e27c-45eb-b57f-ec9e9899d25c"
+      }
+    },
+    {
+      "id": "741f08a4-6296-4b42-896c-e4fb7d652aa9",
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
