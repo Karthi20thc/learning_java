@@ -1,0 +1,20 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "3b7ee620-6d74-4a64-91b2-c9799638ddfe",
+      "cell_type": "markdown",
+      "source": "Short answer: **❌ No — not *instead of***\nCorrect answer: **👉 *Use interfaces AND abstract classes, each for different reasons***.\n\nThis is exactly the **“important shift”** you noticed 👍\nLet’s make it crystal clear.\n\n---\n\n## The Core Rule (remember this)\n\n> **Abstract classes model *what something IS***\n> **Interfaces model *what something CAN DO***\n\nThey solve **different problems**.\n\n---\n\n## Why interfaces are NOT a replacement for abstract classes\n\n### Your code proves this 👇\n\n```java\nabstract class Animal {\n    public abstract void move();\n}\n```\n\nThis answers:\n\n> What is a Bird?\n> ✔ A Bird **is an Animal**\n\nNow look at:\n\n```java\ninterface FlightEnabled {\n    void fly();\n}\n```\n\nThis answers:\n\n> What can a Bird do?\n> ✔ It **can fly**\n\nThese are **not interchangeable concepts**.\n\n---\n\n## Why we DID NOT make `Animal` an interface\n\nAsk yourself:\n\n> Are all animals the same kind of “thing”?\n\nYes.\n\n> Do all animals fly?\n\nNo.\n\nSo:\n\n* `Animal` → abstract class\n* `FlightEnabled` → interface\n\nThis is **correct design**.\n\n---\n\n## When you SHOULD use an interface instead of an abstract class\n\n### Use an **interface** when:\n\n✔ You want **multiple inheritance**\n✔ You are modeling a **capability / role**\n✔ You don’t need instance state\n✔ Many unrelated classes can implement it\n\nExample:\n\n```java\ninterface Trackable {\n    void track();\n}\n```\n\nBird, Drone, Ship — all can be trackable.\n\n---\n\n## When you SHOULD use an abstract class\n\n### Use an **abstract class** when:\n\n✔ There is a strong **is-a relationship**\n✔ You want shared logic or state\n✔ You want constructors\n✔ You want protected fields\n\nExample:\n\n```java\nabstract class Animal {\n    protected int age;\n}\n```\n\n---\n\n## The REAL shift in thinking (important)\n\n### Old thinking (wrong):\n\n> “Interfaces replace abstract classes”\n\n### Correct thinking:\n\n> **Interfaces complement abstract classes**\n\nJava intentionally supports:\n\n* Single class inheritance\n* Multiple interface inheritance\n\nThis avoids complexity **and** gives flexibility.\n\n---\n\n## Quick decision table (SAVE THIS)\n\n| Question                    | Use            |\n| --------------------------- | -------------- |\n| Is it an identity?          | Abstract class |\n| Is it a capability?         | Interface      |\n| Needs fields?               | Abstract class |\n| Needs multiple inheritance? | Interface      |\n| Many unrelated classes?     | Interface      |\n\n---\n\n## Example combining BOTH (your code)\n\n```java\nclass Bird extends Animal implements FlightEnabled, Trackable\n```\n\nThis line literally means:\n\n> A Bird **is an Animal**,\n> **can fly**,\n> and **can be tracked**.\n\nThat’s **perfect OOP design**.\n\n---\n\n## One-line interview answer\n\n> “Interfaces don’t replace abstract classes; they model capabilities, while abstract classes model identity and shared state. Most real designs use both together.”\n\nIf you want next, I can:\n\n* Show **bad design if Animal were an interface**\n* Convert Animal → interface and show what breaks\n* Explain **default methods**\n* Show **real interview traps**\n\nJust tell me 👍\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "3b7ee620-6d74-4a64-91b2-c9799638ddfe"
+      }
+    }
+  ]
+}
