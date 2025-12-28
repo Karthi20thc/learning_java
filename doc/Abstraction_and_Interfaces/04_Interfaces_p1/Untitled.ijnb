@@ -8,97 +8,7 @@
   },
   "cells": [
     {
-      "id": "0a106b17-f692-42af-8f77-a38b7ce1d102",
-      "cell_type": "markdown",
-      "source": "",
-      "metadata": {
-        "language": "markdown",
-        "id": "0a106b17-f692-42af-8f77-a38b7ce1d102"
-      }
-    },
-    {
-      "id": "f0271c29-8a14-442a-a0fd-7a09167745c0",
-      "cell_type": "markdown",
-      "source": "",
-      "metadata": {
-        "language": "markdown",
-        "id": "f0271c29-8a14-442a-a0fd-7a09167745c0"
-      }
-    },
-    {
-      "id": "ecce7a72-0f81-4e62-ab6b-bc893a4480fc",
-      "cell_type": "markdown",
-      "source": "",
-      "metadata": {
-        "language": "markdown",
-        "id": "ecce7a72-0f81-4e62-ab6b-bc893a4480fc"
-      }
-    },
-    {
-      "id": "33dba526-1335-4aab-8bdc-3fe7d1f427ce",
-      "cell_type": "markdown",
-      "source": "",
-      "metadata": {
-        "language": "markdown",
-        "id": "33dba526-1335-4aab-8bdc-3fe7d1f427ce"
-      }
-    },
-    {
-      "id": "b7fb1e10-aeb0-4fae-8c08-97386c1e52b2",
-      "cell_type": "markdown",
-      "source": "",
-      "metadata": {
-        "language": "markdown",
-        "id": "b7fb1e10-aeb0-4fae-8c08-97386c1e52b2"
-      }
-    },
-    {
-      "id": "05827682-99e2-4a87-814b-34ee7b48432b",
-      "cell_type": "markdown",
-      "source": "",
-      "metadata": {
-        "language": "markdown",
-        "id": "05827682-99e2-4a87-814b-34ee7b48432b"
-      }
-    },
-    {
-      "id": "d03e4693-1d52-4c1d-a87e-59a7cc38278a",
-      "cell_type": "markdown",
-      "source": "",
-      "metadata": {
-        "language": "markdown",
-        "id": "d03e4693-1d52-4c1d-a87e-59a7cc38278a"
-      }
-    },
-    {
-      "id": "7a5be5c1-1d50-4d70-9feb-88c656e496f4",
-      "cell_type": "markdown",
-      "source": "",
-      "metadata": {
-        "language": "markdown",
-        "id": "7a5be5c1-1d50-4d70-9feb-88c656e496f4"
-      }
-    },
-    {
-      "id": "76be4ae7-f6aa-4c71-a1a9-742c9a3e8f48",
-      "cell_type": "markdown",
-      "source": "",
-      "metadata": {
-        "language": "markdown",
-        "id": "76be4ae7-f6aa-4c71-a1a9-742c9a3e8f48"
-      }
-    },
-    {
-      "id": "8121da8f-a308-497a-ae23-7948d4d8c7ff",
-      "cell_type": "markdown",
-      "source": "Great — this is your **first clean example of interfaces**, and it’s an important shift from abstract classes.\nI’ll explain it **from the code outward**, then tie it to **rules you must remember**.\n\n---\n\n## 🧠 Big Picture (before code)\n\nThis example teaches **“multiple capabilities”**.\n\n* An **animal** can move\n* A **bird** can:\n\n  * move (as an animal)\n  * fly (flight capability)\n  * be tracked (tracking capability)\n\nJava does this using **interfaces**.\n\n---\n\n# 1️⃣ `FlightEnabled` interface\n\n```java\ninterface FlightEnabled {\n\n    void takeOff();\n    void land();\n    void fly();\n\n}\n```\n\n### What an interface means\n\n* It defines **WHAT can be done**\n* NOT **HOW it is done**\n* All methods are:\n\n  * implicitly `public`\n  * implicitly `abstract`\n\nSo this is a **contract**:\n\n> “Any class that claims it can fly MUST implement these methods.”\n\n---\n\n# 2️⃣ `Trackable` interface\n\n```java\ninterface Trackable {\n\n    void track();\n}\n```\n\nAnother **capability contract**.\n\nImportant idea:\n\n* Interfaces represent **abilities**, not “is-a” relationships\n\n---\n\n# 3️⃣ `Animal` abstract class\n\n```java\npublic abstract class Animal {\n\n    public abstract void move();\n}\n```\n\nWhy abstract class here?\n\n* Animals share **identity**\n* Not all animals fly\n* Not all animals are trackable\n\nSo:\n\n* `Animal` → *what it is*\n* `FlightEnabled` → *what it can do*\n* `Trackable` → *another ability*\n\n---\n\n# 4️⃣ `Bird` class (MOST IMPORTANT FILE)\n\n```java\npublic class Bird extends Animal implements FlightEnabled, Trackable {\n```\n\n### This line is 🔥\n\nIt means:\n\n| Keyword                    | Meaning                 |\n| -------------------------- | ----------------------- |\n| `extends Animal`           | Bird **is an** Animal   |\n| `implements FlightEnabled` | Bird **can fly**        |\n| `implements Trackable`     | Bird **can be tracked** |\n\n👉 Java allows:\n\n* **Only one class** to be extended\n* **Multiple interfaces** to be implemented\n\n---\n\n## Methods Bird MUST implement\n\n### From `Animal`\n\n```java\n@Override\npublic void move() {\n    System.out.println(\"Flaps wings\");\n}\n```\n\n### From `FlightEnabled`\n\n```java\ntakeOff()\nfly()\nland()\n```\n\n### From `Trackable`\n\n```java\ntrack()\n```\n\nIf **any one** is missing → ❌ compile-time error.\n\n---\n\n## Why `getClass().getSimpleName()` works\n\n```java\ngetClass().getSimpleName()\n```\n\nAt runtime:\n\n* Java knows the **actual object type**\n* Prints `Bird`\n\nThis is **runtime type awareness**.\n\n---\n\n# 5️⃣ `Main.java` — POLYMORPHISM IN ACTION\n\nThis is the most important part conceptually.\n\n---\n\n### Creating the object\n\n```java\nBird bird = new Bird();\n```\n\nSingle object in memory.\n\n---\n\n### Multiple references to the SAME object\n\n```java\nAnimal animal = bird;\nFlightEnabled flier = bird;\nTrackable tracked = bird;\n```\n\nThis is allowed because:\n\n| Reference type  | Why allowed         |\n| --------------- | ------------------- |\n| `Animal`        | Bird extends Animal |\n| `FlightEnabled` | Bird implements it  |\n| `Trackable`     | Bird implements it  |\n\n⚠️ **Same object, different views**\n\n---\n\n## What methods can each reference call?\n\n### `animal`\n\n```java\nanimal.move();   // ✅\n```\n\n❌ Not allowed:\n\n```java\nanimal.fly();    // compile error\n```\n\nBecause:\n\n* `Animal` doesn’t know about flying\n\n---\n\n### `flier`\n\n```java\nflier.takeOff();\nflier.fly();\nflier.land();\n```\n\n❌ Not allowed:\n\n```java\nflier.move();\n```\n\nBecause:\n\n* `FlightEnabled` doesn’t define `move()`\n\n---\n\n### `tracked`\n\n```java\ntracked.track();\n```\n\nThat’s it — only what the interface exposes.\n\n---\n\n## 🔥 KEY RULE (MUST REMEMBER)\n\n> **The reference type determines what methods you can call, not the object type.**\n\nEven though the object is a `Bird`.\n\n---\n\n## Why interfaces are powerful (REAL DESIGN REASON)\n\nWithout interfaces:\n\n* Bird, Plane, Drone would need a common parent\n* That makes no sense biologically\n\nWith interfaces:\n\n```java\nclass Plane implements FlightEnabled\nclass Drone implements FlightEnabled, Trackable\nclass Bird implements FlightEnabled\n```\n\n✔ Clean\n✔ Flexible\n✔ Scalable\n\n---\n\n## Abstract Class vs Interface (from THIS code)\n\n| Abstract Class                   | Interface                            |\n| -------------------------------- | ------------------------------------ |\n| Represents **what something is** | Represents **what something can do** |\n| Can have fields                  | No instance fields                   |\n| Single inheritance               | Multiple inheritance                 |\n| Example: `Animal`                | Example: `FlightEnabled`             |\n\n---\n\n## One-line takeaway (INTERVIEW READY)\n\n> **Interfaces model capabilities and allow multiple inheritance of behavior contracts, while abstract classes model identity and shared structure.**\n\nIf you want next, I can:\n\n* Add `default` methods to interfaces\n* Show diamond problem & why Java avoids it\n* Compare interface vs abstract class interview questions\n* Show real-world design patterns using interfaces\n\nJust tell me 👍\n",
-      "metadata": {
-        "language": "markdown",
-        "id": "8121da8f-a308-497a-ae23-7948d4d8c7ff"
-      }
-    },
-    {
-      "id": "3d045145-40d7-42c6-b262-18f6e4fa46d9",
+      "id": "54185e0c-4f8e-4b5a-a5d7-f9e2a5b40ddc",
       "cell_type": "code",
       "source": "// Folder resource\\Section 11\\6 Source-code-Abstraction-in-Java-Interfaces-Part-1\\Interfaces\\src\n// 3 printable files\n// (file list disabled)\n\n// resource\\Section 11\\6 Source-code-Abstraction-in-Java-Interfaces-Part-1\\Interfaces\\src\\dev\\lpa\\Animal.java\n1\tpackage dev.lpa;\n2\t\n3\tinterface FlightEnabled {\n4\t\n5\t    void takeOff();\n6\t    void land();\n7\t    void fly();\n8\t\n9\t}\n10\t\n11\tinterface Trackable {\n12\t\n13\t    void track();\n14\t}\n15\t\n16\t\n17\tpublic abstract class Animal {\n18\t\n19\t    public abstract void move();\n20\t}\n21\t \n// resource\\Section 11\\6 Source-code-Abstraction-in-Java-Interfaces-Part-1\\Interfaces\\src\\dev\\lpa\\Bird.java\n1\tpackage dev.lpa;\n2\t\n3\tpublic class Bird extends Animal implements FlightEnabled, Trackable {\n4\t\n5\t    @Override\n6\t    public void move() {\n7\t        System.out.println(\"Flaps wings\");\n8\t    }\n9\t\n10\t    @Override\n11\t    public void takeOff() {\n12\t        System.out.println(getClass().getSimpleName() + \" is taking off\");\n13\t    }\n14\t\n15\t    @Override\n16\t    public void land() {\n17\t        System.out.println(getClass().getSimpleName() + \" is landing\");\n18\t    }\n19\t\n20\t    @Override\n21\t    public void fly() {\n22\t        System.out.println(getClass().getSimpleName() + \" is flying\");\n23\t    }\n24\t\n25\t    @Override\n26\t    public void track() {\n27\t        System.out.println(getClass().getSimpleName() + \"'s coordinates recorded\");\n28\t    }\n29\t}\n30\t \n// resource\\Section 11\\6 Source-code-Abstraction-in-Java-Interfaces-Part-1\\Interfaces\\src\\dev\\lpa\\Main.java\n1\tpackage dev.lpa;\n2\t\n3\tpublic class Main {\n4\t\n5\t    public static void main(String[] args) {\n6\t\n7\t        Bird bird = new Bird();\n8\t        Animal animal = bird;\n9\t        FlightEnabled flier = bird;\n10\t        Trackable tracked = bird;\n11\t\n12\t        animal.move();\n13\t//        flier.move();\n14\t//        tracked.move();\n15\t\n16\t        flier.takeOff();\n17\t        flier.fly();\n18\t        tracked.track();\n19\t        flier.land();\n20\t    }\n21\t}\n22\t ",
       "metadata": {
@@ -106,6 +16,15 @@
       },
       "execution_count": null,
       "outputs": []
+    },
+    {
+      "id": "e616c635-74b5-4f44-9fdd-1ba537f982a9",
+      "cell_type": "markdown",
+      "source": "You’re looking at a **clean, textbook example of abstraction in Java using abstract classes and interfaces**. Let’s walk through it **slowly and conceptually**, line by line, and then connect it to **why the code behaves the way it does**.\n\n---\n\n## 1️⃣ `Animal.java` – Base abstraction (IS-A relationship)\n\n```java\npublic abstract class Animal {\n\n    public abstract void move();\n}\n```\n\n### What this means\n\n* `Animal` is an **abstract class**\n* It represents the **idea of an animal**, not a concrete thing\n* It declares **what animals must do**, not how\n\n🔹 `move()` has **no body**\n→ Every animal must move, but **each animal moves differently**\n\n👉 You **cannot create**:\n\n```java\nnew Animal(); // ❌ illegal\n```\n\n👉 You **must override** `move()` in subclasses\n\n---\n\n## 2️⃣ Interfaces inside `Animal.java`\n\n### `FlightEnabled`\n\n```java\ninterface FlightEnabled {\n    void takeOff();\n    void land();\n    void fly();\n}\n```\n\n### `Trackable`\n\n```java\ninterface Trackable {\n    void track();\n}\n```\n\n### Key ideas about interfaces\n\n* Interfaces define **capabilities**, not identity\n* They answer the question:\n  **“What can this object do?”**\n\n| Interface       | Meaning        |\n| --------------- | -------------- |\n| `FlightEnabled` | Can fly        |\n| `Trackable`     | Can be tracked |\n\n🔹 No implementation\n🔹 No state\n🔹 Methods are **implicitly public and abstract**\n\n---\n\n## 3️⃣ `Bird.java` – Concrete class (combining abstractions)\n\n```java\npublic class Bird extends Animal \n                  implements FlightEnabled, Trackable {\n```\n\n### This line is VERY important\n\n```text\nBird IS an Animal\nBird CAN fly\nBird CAN be tracked\n```\n\n* `extends Animal` → **inheritance**\n* `implements FlightEnabled, Trackable` → **multiple capabilities**\n\nJava allows:\n\n* ❌ Multiple class inheritance\n* ✅ Multiple interface implementation\n\n---\n\n### Implementing `Animal`\n\n```java\n@Override\npublic void move() {\n    System.out.println(\"Flaps wings\");\n}\n```\n\n✔ Required because `Animal.move()` is abstract\n\n---\n\n### Implementing `FlightEnabled`\n\n```java\npublic void takeOff() { ... }\npublic void fly() { ... }\npublic void land() { ... }\n```\n\n✔ Required because Bird says it **implements FlightEnabled**\n\n---\n\n### Implementing `Trackable`\n\n```java\npublic void track() {\n    System.out.println(getClass().getSimpleName() + \"'s coordinates recorded\");\n}\n```\n\n✔ Required because Bird says it **implements Trackable**\n\n---\n\n## 4️⃣ `Main.java` – Polymorphism in action\n\n```java\nBird bird = new Bird();\nAnimal animal = bird;\nFlightEnabled flier = bird;\nTrackable tracked = bird;\n```\n\n### 🔥 THIS IS THE CORE LESSON 🔥\n\nYou created **one object**, but you’re holding it in **four different ways**.\n\n```text\nActual object in memory → Bird\n```\n\n| Reference type  | What methods you can call |\n| --------------- | ------------------------- |\n| `Bird`          | ALL methods               |\n| `Animal`        | Only `move()`             |\n| `FlightEnabled` | Only flight methods       |\n| `Trackable`     | Only `track()`            |\n\n---\n\n## 5️⃣ Why some lines compile and others don’t\n\n### ✅ This works\n\n```java\nanimal.move();\n```\n\nBecause `Animal` defines `move()`\n\n---\n\n### ❌ These do NOT compile\n\n```java\nflier.move();    // ❌\ntracked.move(); // ❌\n```\n\nBecause:\n\n* `FlightEnabled` does **not** declare `move()`\n* `Trackable` does **not** declare `move()`\n\n💡 Even though the object IS a Bird,\n**the reference type controls what you can access**\n\n---\n\n### ✅ These work\n\n```java\nflier.takeOff();\nflier.fly();\ntracked.track();\nflier.land();\n```\n\nBecause:\n\n* `FlightEnabled` knows flight methods\n* `Trackable` knows `track()`\n\n---\n\n## 6️⃣ Runtime behavior (dynamic dispatch)\n\n```java\nSystem.out.println(getClass().getSimpleName());\n```\n\nThis prints:\n\n```text\nBird is taking off\nBird is flying\nBird's coordinates recorded\nBird is landing\n```\n\nWhy?\n\n* The **actual object** is a `Bird`\n* Java resolves the method at **runtime**, not compile time\n\nThis is **polymorphism**\n\n---\n\n## 7️⃣ Why this design is powerful\n\n### Without interfaces (bad design)\n\n```java\nclass Bird {\n    void fly() {}\n    void track() {}\n}\n```\n\n🚫 Tight coupling\n🚫 No flexibility\n🚫 Hard to extend\n\n---\n\n### With interfaces (good design)\n\nYou can later add:\n\n```java\nclass Plane implements FlightEnabled { ... }\nclass Drone implements FlightEnabled, Trackable { ... }\nclass Dog extends Animal { ... } // no flying\n```\n\nSame interfaces, **different behavior**\n\n---\n\n## 8️⃣ Mental model to remember\n\n> **Abstract class** → “What it *is*”\n> **Interface** → “What it *can do*”\n\n```text\nBird IS an Animal\nBird CAN Fly\nBird CAN Be Tracked\n```\n\n---\n\n## 9️⃣ How this applies to Spring Boot (your future work)\n\nSince you’re working with **REST APIs and Spring Boot**:\n\n* Interfaces → Service contracts\n* Implementations → Business logic\n* Controllers depend on interfaces, not classes\n\nThis is **Dependency Inversion Principle**\n\n---\n\nIf you want, next I can:\n\n* Rewrite this example using **real-world APIs**\n* Show how Spring uses this internally\n* Add **default methods** to interfaces\n* Convert this into a **UML diagram**\n* Extend it with another class (Plane / Dog)\n\nJust tell me 👍\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "e616c635-74b5-4f44-9fdd-1ba537f982a9"
+      }
     }
   ]
 }
