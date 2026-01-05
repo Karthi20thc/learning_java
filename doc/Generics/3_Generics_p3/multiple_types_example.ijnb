@@ -1,0 +1,20 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "2c378fd3-98fa-46fa-87bf-dd884845c754",
+      "cell_type": "markdown",
+      "source": "Yes ✅ **we can use multiple types in Java Generics**, and this is **very common in real-world systems**.\n\nLet’s go step-by-step with **ONE strong real-world example** so it’s easy to remember.\n\n---\n\n## 🏦 Real-World Example: **Bank Transaction Record**\n\nA bank transaction always has:\n\n1. **Transaction ID** → String\n2. **Account Number** → Long\n3. **Amount** → Double\n\nThese types are **different**, but they logically belong together.\n\n---\n\n## ❌ Normal Class (Hard-coded Types)\n\n```java\nclass Transaction {\n    private String transactionId;\n    private Long accountNumber;\n    private Double amount;\n\n    public Transaction(String transactionId, Long accountNumber, Double amount) {\n        this.transactionId = transactionId;\n        this.accountNumber = accountNumber;\n        this.amount = amount;\n    }\n}\n```\n\n### ❌ Problem\n\n* Works **only for this exact structure**\n* Not reusable for:\n\n  * Order records\n  * Audit logs\n  * Key-value storage\n* You must create **new classes again and again**\n\n---\n\n## ✅ Generic Class with Multiple Types\n\n```java\nclass Record<K, V, A> {\n    private K key;\n    private V value;\n    private A amount;\n\n    public Record(K key, V value, A amount) {\n        this.key = key;\n        this.value = value;\n        this.amount = amount;\n    }\n\n    public K getKey() { return key; }\n    public V getValue() { return value; }\n    public A getAmount() { return amount; }\n}\n```\n\n---\n\n## ✅ Real Usage\n\n### 🏦 Bank Transaction\n\n```java\nRecord<String, Long, Double> txn =\n        new Record<>(\"TXN1001\", 9876543210L, 25000.75);\n```\n\n### 🛒 E-commerce Order\n\n```java\nRecord<Integer, String, Double> order =\n        new Record<>(101, \"Laptop\", 89999.99);\n```\n\n### 📊 Audit Log\n\n```java\nRecord<String, String, Long> log =\n        new Record<>(\"LOGIN\", \"SUCCESS\", System.currentTimeMillis());\n```\n\n👉 **Same class, multiple real-world uses**\n\n---\n\n## 🔥 Most Popular Real Example in Java (You Already Use It)\n\n```java\nMap<K, V>\n```\n\n### Example\n\n```java\nMap<String, Integer> stockCount = new HashMap<>();\n```\n\n| Generic | Meaning    |\n| ------- | ---------- |\n| `K`     | Key type   |\n| `V`     | Value type |\n\nWhy not just `Map<Object, Object>`?\n❌ Because it allows wrong data and runtime crashes.\n\n---\n\n## 🚨 Compile-Time Safety (Big Win)\n\n```java\nMap<String, Integer> map = new HashMap<>();\n\nmap.put(\"AAPL\", 100);     // ✅ OK\nmap.put(123, \"Apple\");   // ❌ Compile-time error\n```\n\n---\n\n## 🧠 Real-World Analogy (Easy Memory Trick)\n\nThink of **Courier Label** 📦\n\n```text\nLabel<SenderType, ReceiverType, WeightType>\n```\n\n* Sender → String\n* Receiver → String\n* Weight → Double\n\nEach field has **different type**, but belongs to **one package**\n\n---\n\n## 🏁 Final One-Line Summary\n\n> **Multiple generic types let one class represent real-world objects that naturally contain different kinds of data, while staying type-safe and reusable.**\n\n---\n\nIf you want next, I can show:\n\n* `class Pair<K, V>` vs real project usage\n* Generic methods with multiple types\n* Bounded generics (`<T extends Number>`) using finance examples\n* Why Java uses `K`, `V`, `T` naming convention\n\nJust say 👍\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "2c378fd3-98fa-46fa-87bf-dd884845c754"
+      }
+    }
+  ]
+}
