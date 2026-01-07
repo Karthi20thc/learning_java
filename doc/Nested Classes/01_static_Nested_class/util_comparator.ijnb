@@ -1,0 +1,20 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "80651f98-cbd8-4847-980a-dfb6856c8cb3",
+      "cell_type": "markdown",
+      "source": "`import java.util.Comparator;` is used when you want to **define custom sorting logic** for objects in Java.\n\nIn simple terms, **`Comparator` tells Java *how* to compare two objects** when their natural order isn’t enough or doesn’t exist.\n\n---\n\n## 🔹 What problem does `Comparator` solve?\n\n* Many objects **don’t have a natural order**\n* Sometimes you want **multiple sorting rules**\n* Sometimes you **can’t modify the class** you want to sort\n\n`Comparator` lets you solve all of these **without changing the class itself**.\n\n---\n\n## 🔹 What is `Comparator`?\n\n`Comparator<T>` is a **functional interface** with one main method:\n\n```java\nint compare(T o1, T o2);\n```\n\nIt returns:\n\n* `0` → both are equal\n* `< 0` → `o1` comes before `o2`\n* `> 0` → `o1` comes after `o2`\n\n---\n\n## 🔹 Basic Example\n\n### Sorting integers in reverse order\n\n```java\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<Integer> nums = Arrays.asList(5, 1, 9, 3);\n\n        Collections.sort(nums, Comparator.reverseOrder());\n\n        System.out.println(nums); // [9, 5, 3, 1]\n    }\n}\n```\n\n👉 `Comparator.reverseOrder()` **comes from `Comparator`**\n\n---\n\n## 🔹 Real-world Example (Custom Object)\n\n### Employee class (no sorting logic inside it)\n\n```java\nclass Employee {\n    String name;\n    int salary;\n\n    Employee(String name, int salary) {\n        this.name = name;\n        this.salary = salary;\n    }\n}\n```\n\n### Sort employees by salary\n\n```java\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<Employee> list = new ArrayList<>();\n        list.add(new Employee(\"John\", 50000));\n        list.add(new Employee(\"Alice\", 70000));\n        list.add(new Employee(\"Bob\", 60000));\n\n        list.sort(new Comparator<Employee>() {\n            @Override\n            public int compare(Employee e1, Employee e2) {\n                return e1.salary - e2.salary;\n            }\n        });\n\n        list.forEach(e -> System.out.println(e.name));\n    }\n}\n```\n\n---\n\n## 🔹 Same Example Using Lambda (Modern Java)\n\n```java\nlist.sort((e1, e2) -> e1.salary - e2.salary);\n```\n\nOr cleaner:\n\n```java\nlist.sort(Comparator.comparingInt(e -> e.salary));\n```\n\n---\n\n## 🔹 `Comparator` vs `Comparable`\n\n| Feature              | Comparable    | Comparator  |\n| -------------------- | ------------- | ----------- |\n| Package              | `java.lang`   | `java.util` |\n| Method               | `compareTo()` | `compare()` |\n| Modifies class?      | ✅ Yes         | ❌ No        |\n| Multiple sort rules? | ❌ No          | ✅ Yes       |\n\n---\n\n## 🔹 When should **you** use `Comparator`?\n\n✅ When:\n\n* You want **multiple sorting strategies**\n* You **cannot edit** the class\n* You want **dynamic sorting**\n* You want **clean, reusable sorting logic**\n\n❌ Avoid when:\n\n* A class has **only one natural order** → use `Comparable`\n\n---\n\n## 🔹 Quick takeaway\n\n```java\nimport java.util.Comparator;\n```\n\n👉 Enables **custom, flexible, and reusable sorting logic**\n👉 Commonly used with `Collections.sort()`, `List.sort()`, and Streams\n\nIf you want, I can show:\n\n* `Comparator` chaining (`thenComparing`)\n* Sorting with Streams\n* Difference with real Spring Boot use cases\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "80651f98-cbd8-4847-980a-dfb6856c8cb3"
+      }
+    }
+  ]
+}
