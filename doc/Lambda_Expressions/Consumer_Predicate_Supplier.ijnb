@@ -1,0 +1,20 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "ff9350b7-bed0-4fa2-ace7-4f7255e4a99a",
+      "cell_type": "markdown",
+      "source": "In Java, **functional interfaces** are interfaces that have **exactly one abstract method**. They are the foundation of **lambda expressions** and the **Stream API**.\n\nThe **four fundamental functional interfaces** live in `java.util.function` and cover most day-to-day use cases.\n\n---\n\n## 1️⃣ `Predicate<T>`\n\n**Purpose:** Test a condition\n**Abstract method:** `boolean test(T t)`\n\n* Takes **one input**\n* Returns **true or false**\n* Commonly used for **filtering**\n\n```java\nPredicate<Integer> isEven = n -> n % 2 == 0;\nSystem.out.println(isEven.test(10)); // true\n```\n\n**Typical usage**\n\n* `filter()` in streams\n* Validations\n* Conditional checks\n\n---\n\n## 2️⃣ `Function<T, R>`\n\n**Purpose:** Transform data\n**Abstract method:** `R apply(T t)`\n\n* Takes **one input**\n* Returns **one output (possibly different type)**\n\n```java\nFunction<String, Integer> lengthFn = s -> s.length();\nSystem.out.println(lengthFn.apply(\"Java\")); // 4\n```\n\n**Typical usage**\n\n* `map()` in streams\n* Conversions\n* DTO ↔ Entity mapping\n\n---\n\n## 3️⃣ `Consumer<T>`\n\n**Purpose:** Perform an action (side effects)\n**Abstract method:** `void accept(T t)`\n\n* Takes **one input**\n* Returns **nothing**\n\n```java\nConsumer<String> printer = s -> System.out.println(s);\nprinter.accept(\"Hello Java\");\n```\n\n**Typical usage**\n\n* Logging\n* Printing\n* Updating external systems\n\n---\n\n## 4️⃣ `Supplier<T>`\n\n**Purpose:** Provide a value\n**Abstract method:** `T get()`\n\n* Takes **no input**\n* Returns **a value**\n\n```java\nSupplier<Double> randomValue = () -> Math.random();\nSystem.out.println(randomValue.get());\n```\n\n**Typical usage**\n\n* Lazy initialization\n* Object creation\n* Default values\n\n---\n\n## 🧠 Big Picture (How they relate)\n\n![Image](https://images.primeagile.com/ibcscorp_com/image/34201/java-functional-interfaces.webp)\n\n![Image](https://javaconceptoftheday.com/wp-content/uploads/2019/03/Java8FunctionalInterfaces.png)\n\n| Interface | Input | Output  | Meaning           |\n| --------- | ----- | ------- | ----------------- |\n| Predicate | 1     | boolean | Test a condition  |\n| Function  | 1     | 1       | Transform data    |\n| Consumer  | 1     | none    | Perform an action |\n| Supplier  | 0     | 1       | Provide a value   |\n\n---\n\n## 🚀 Bonus: Primitive Specializations\n\nTo avoid boxing/unboxing, Java provides variants like:\n\n* `IntPredicate`\n* `LongFunction<R>`\n* `DoubleConsumer`\n* `IntSupplier`\n\n---\n\n## ✅ Why these 4 matter\n\nAlmost **every lambda** in Java fits into one of these patterns:\n\n* **Check** → `Predicate`\n* **Transform** → `Function`\n* **Act** → `Consumer`\n* **Provide** → `Supplier`\n\nIf you want, I can next:\n\n* Map these to **Stream API methods**\n* Show **real Spring Boot examples**\n* Explain **custom functional interfaces** and `@FunctionalInterface`\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "ff9350b7-bed0-4fa2-ace7-4f7255e4a99a"
+      }
+    }
+  ]
+}

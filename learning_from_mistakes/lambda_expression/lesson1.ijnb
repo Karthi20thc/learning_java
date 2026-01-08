@@ -1,0 +1,40 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "27dbb5ee-0123-4df2-9a5c-749a16f92857",
+      "cell_type": "code",
+      "source": "// wrong\nimport java.util.Arrays;\nimport java.util.ArrayList;\nimport java.util.List;\n\nclass Main {\n    public static void main(String[] args) {\n\n        ArrayList<String> mylist = new ArrayList<>();\n        mylist.add(\"first\");\n        mylist.add(\"second\");\n        mylist.add(\"third\");\n       \n        mylist.forEach(x -> System.out::println);\n    }\n}",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "d7867926-0b8c-4a1f-bbd4-02d16329f11e",
+      "cell_type": "code",
+      "source": "// correct \n\n\nimport java.util.Arrays;\nimport java.util.ArrayList;\nimport java.util.List;\n\nclass Main {\n    public static void main(String[] args) {\n\n        ArrayList<String> mylist = new ArrayList<>();\n        mylist.add(\"first\");\n        mylist.add(\"second\");\n        mylist.add(\"third\");\n       \n       mylist.forEach(System.out::println);\n    }\n}\n",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "be43d83f-1d2a-4aa0-8a13-e7b189687a4e",
+      "cell_type": "markdown",
+      "source": "You’re **very close** 👍\nThe issue is only in **this line**:\n\n```java\nmylist.forEach(x -> System.out::println);\n```\n\n---\n\n## ❌ Why this is wrong\n\nLet’s break it down:\n\n* `forEach` expects a **Consumer<T>**\n* A `Consumer<T>` is a function that **accepts one value and returns nothing**\n\n### Your lambda:\n\n```java\nx -> System.out::println\n```\n\nThis means:\n\n> “Ignore `x` and return a method reference”\n\nBut:\n\n* `System.out::println` **is already** a `Consumer<String>`\n* You are **wrapping a Consumer inside another lambda**, which is invalid\n\nJava expects:\n\n```java\nConsumer<String> accept(String x)\n```\n\nbut you gave it:\n\n```java\nString x -> Consumer<String>\n```\n\n---\n\n## ✅ Correct ways to write this\n\n### ✅ Option 1 (BEST & CLEANEST): Method reference\n\n```java\nmylist.forEach(System.out::println);\n```\n\n✔ `println` already knows how to consume a `String`\n\n---\n\n### ✅ Option 2: Proper lambda\n\n```java\nmylist.forEach(x -> System.out.println(x));\n```\n\n✔ Here `x` is actually used\n\n---\n\n## ✅ Full corrected code\n\n```java\nimport java.util.ArrayList;\n\nclass Main {\n    public static void main(String[] args) {\n\n        ArrayList<String> mylist = new ArrayList<>();\n        mylist.add(\"first\");\n        mylist.add(\"second\");\n        mylist.add(\"third\");\n\n        mylist.forEach(System.out::println);\n    }\n}\n```\n\n### Output\n\n```\nfirst\nsecond\nthird\n```\n\n---\n\n## 🧠 Key Rule (IMPORTANT)\n\n| Syntax                       | Meaning          |\n| ---------------------------- | ---------------- |\n| `x -> System.out.println(x)` | Lambda           |\n| `System.out::println`        | Method reference |\n| ❌ `x -> System.out::println` | ❌ INVALID        |\n\n---\n\n## 🔥 Mental Model\n\n* **Lambda** → write the logic\n* **Method reference** → reuse existing logic\n* ❌ Never mix both in one line\n\n---\n\nIf you want, next I can explain:\n\n* `Consumer`, `Predicate`, `Supplier`\n* How `forEach` works internally\n* When to use lambda vs method reference\n\nJust say 👍\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "be43d83f-1d2a-4aa0-8a13-e7b189687a4e"
+      }
+    }
+  ]
+}
