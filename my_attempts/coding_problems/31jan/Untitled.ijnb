@@ -1,0 +1,35 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "33dea156-a9b9-4237-b9f9-0cec8dc3e77a",
+      "cell_type": "code",
+      "source": "String test = \"hello\";\n\nSystem.out.println(test.charAt(0));",
+      "metadata": {
+        "language": "java",
+        "id": "33dea156-a9b9-4237-b9f9-0cec8dc3e77a",
+        "executionSummary": {
+          "executionOrder": 3,
+          "success": true
+        }
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": "h\n"
+          },
+          "metadata": {},
+          "execution_count": 3
+        }
+      ]
+    }
+  ]
+}
