@@ -1,9 +1,14 @@
 package my_attempts.Collections_Framework.ArrayList;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Feb03 {
         public static void main(String[] args) {
 
-            System.out.println("ArrayList");
+            List<String> my_list = new ArrayList<>(List.of("hello", "hello2"));
+
+            System.out.println(my_list);
     }
 }
