@@ -1,5 +1,3 @@
-// package my_attempts.Collections_Framework.HashMap;
-
 import java.util.HashMap;
 import java.util.Map;
 
